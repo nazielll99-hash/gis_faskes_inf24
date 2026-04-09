@@ -26,14 +26,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-    <div class="container">
-      <a href="<?=base_url('AdminLTE')?>/index3.html" class="navbar-brand">
-        <img src="<?=base_url('AdminLTE')?>/dist/img/AdminLTELogo.png"  class="me-2" height="45px" width="60px">
-      </a>
-      <h5"><b>GIS Fasilitas Kesehatan</b></h5>
-      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+   <div class="container-fluid">
+  <a href="<?=base_url('AdminLTE')?>/index3.html" class="navbar-brand d-flex align-items-center">
+    <img src="<?=base_url('AdminLTE')?>/dist/img/AdminLTELogo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-bold ml-2">GIS Fasilitas Kesehatan</span>
+  </a>
+
+  <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+    <ul class="navbar-nav">
 
       <div class="collapse navbar-collapse order-3" id="navbarCollapse">
         <!-- Left navbar links -->
