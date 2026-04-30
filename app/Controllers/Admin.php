@@ -2,23 +2,47 @@
 
 namespace App\Controllers;
 
+use App\Models\ModelSetting;
+
 class Admin extends BaseController
 {
+    protected $ModelSetting;
+
+    public function __construct()
+    {
+        $this->ModelSetting = new ModelSetting();
+    }
+
     public function index()
     {
-        $data =[
-           'judul' => 'Dashboard',
-           'page' => 'v_dashboard',
+        $data = [
+            'judul' => 'Dashboard',
+            'page' => 'v_dashboard',
         ];
-        return view('v_template_back_end',$data);
+        return view('v_template_back_end', $data);
     }
 
     public function Setting()
     {
-        $data =[
-           'judul' => 'Setting',
-           'page' => 'v_setting',
+        return view('v_template_back_end', [
+            'judul' => 'Setting',
+            'menu' => 'setting',
+            'page' => 'v_setting',
+            'web' => $this->ModelSetting->DataWeb(),
+        ]);
+
+    }
+
+    public function updateSetting()
+    {
+        $data = [
+            'id' => 1,
+            'nama_web' => $this->request->getPost('nama_web'),
+            'coordinat_wilayah' => $this->request->getPost('coordinat_wilayah'),
+            'zoom_view' => $this->request->getPost('zoom_view'),
         ];
-        return view('v_template_back_end',$data);
+        $this->ModelSetting->UpdateData($data);
+        session()->setFlashdata('pesan', 'Settingan Web Telah Diupdate !!!');
+        return redirect()->to('admin/setting');
     }
 }
