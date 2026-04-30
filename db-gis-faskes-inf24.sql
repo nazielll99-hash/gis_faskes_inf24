@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 16, 2026 at 03:34 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Apr 30, 2026 at 05:27 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.5.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gis_faskes24`
+-- Database: `db-gis-faskes-inf24`
 --
 
 -- --------------------------------------------------------
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `tbl_faskes` (
-  `id_faskes` int(11) NOT NULL,
-  `id_jenis` int(50) DEFAULT NULL,
-  `nama_faskes` varchar(150) DEFAULT NULL,
-  `akreditasi` varchar(1) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL,
-  `koordinat` varchar(150) DEFAULT NULL,
-  `foto` varchar(255) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
-  `id_provinsi` int(11) DEFAULT NULL,
-  `id_kabupaten` int(11) DEFAULT NULL,
-  `id_kecamatan` int(11) DEFAULT NULL
+  `id_faskes` int NOT NULL,
+  `id_jenis` int DEFAULT NULL,
+  `nama_faskes` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `akreditasi` varchar(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `koordinat` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_general_ci,
+  `id_provinsi` int DEFAULT NULL,
+  `id_kabupaten` int DEFAULT NULL,
+  `id_kecamatan` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -48,9 +48,9 @@ CREATE TABLE `tbl_faskes` (
 --
 
 CREATE TABLE `tbl_jenis_faskes` (
-  `id_jenis` int(11) NOT NULL,
-  `jenis_faskes` varchar(50) DEFAULT NULL,
-  `marker` varchar(150) DEFAULT NULL
+  `id_jenis` int NOT NULL,
+  `jenis_faskes` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `marker` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -60,10 +60,10 @@ CREATE TABLE `tbl_jenis_faskes` (
 --
 
 CREATE TABLE `tbl_kabupaten` (
-  `id_kabupaten` char(4) NOT NULL,
-  `id_provinsi` char(2) NOT NULL,
-  `nama_kabupaten` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+  `id_kabupaten` char(4) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `id_provinsi` char(2) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `nama_kabupaten` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tbl_kabupaten`
@@ -592,10 +592,10 @@ INSERT INTO `tbl_kabupaten` (`id_kabupaten`, `id_provinsi`, `nama_kabupaten`) VA
 --
 
 CREATE TABLE `tbl_kecamatan` (
-  `id_kecamatan` char(7) NOT NULL,
-  `id_kabupaten` char(4) NOT NULL,
-  `nama_kecamatan` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+  `id_kecamatan` char(7) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `id_kabupaten` char(4) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `nama_kecamatan` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tbl_kecamatan`
@@ -7656,9 +7656,9 @@ INSERT INTO `tbl_kecamatan` (`id_kecamatan`, `id_kabupaten`, `nama_kecamatan`) V
 --
 
 CREATE TABLE `tbl_provinsi` (
-  `id_provinsi` char(2) NOT NULL,
-  `nama_provinsi` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+  `id_provinsi` char(2) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `nama_provinsi` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tbl_provinsi`
@@ -7703,14 +7703,34 @@ INSERT INTO `tbl_provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_setting`
+--
+
+CREATE TABLE `tbl_setting` (
+  `id` int NOT NULL,
+  `nama_web` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `coordinat_wilayah` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `zoom_view` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_setting`
+--
+
+INSERT INTO `tbl_setting` (`id`, `nama_web`, `coordinat_wilayah`, `zoom_view`) VALUES
+(1, 'WEB GIS FASILITAS KESEHATAN', '-7.282942510438273, 109.05719608128057', 12);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_user`
 --
 
 CREATE TABLE `tbl_user` (
-  `id_user` int(11) NOT NULL,
-  `nama_user` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL
+  `id_user` int NOT NULL,
+  `nama_user` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -7720,9 +7740,9 @@ CREATE TABLE `tbl_user` (
 --
 
 CREATE TABLE `tbl_wilayah` (
-  `id_wilayah` int(11) NOT NULL,
-  `nama_wilayah` varchar(150) DEFAULT NULL,
-  `geojson` text DEFAULT NULL
+  `id_wilayah` int NOT NULL,
+  `nama_wilayah` varchar(150) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `geojson` text COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -7762,6 +7782,12 @@ ALTER TABLE `tbl_provinsi`
   ADD PRIMARY KEY (`id_provinsi`) USING BTREE;
 
 --
+-- Indexes for table `tbl_setting`
+--
+ALTER TABLE `tbl_setting`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
@@ -7781,25 +7807,31 @@ ALTER TABLE `tbl_wilayah`
 -- AUTO_INCREMENT for table `tbl_faskes`
 --
 ALTER TABLE `tbl_faskes`
-  MODIFY `id_faskes` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_faskes` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_jenis_faskes`
 --
 ALTER TABLE `tbl_jenis_faskes`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jenis` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_setting`
+--
+ALTER TABLE `tbl_setting`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wilayah`
 --
 ALTER TABLE `tbl_wilayah`
-  MODIFY `id_wilayah` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
