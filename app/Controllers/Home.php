@@ -6,10 +6,10 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        $data =[
-           'judul' => 'Home',
-           'page' => 'v_home',
+        $data = [
+            'judul' => 'Home',
+            'page' => 'v_home',
         ];
-        return view('v_template_front_end',$data);
+        return view('v_template_front_end', $data);
     }
 }
