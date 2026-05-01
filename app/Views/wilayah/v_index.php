@@ -4,14 +4,15 @@
                 <h3 class="card-title"><?= $judul ?></h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
+                  <a href="<?= base_url('wilayah/input') ?>" class="btn btn-flat  btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> tambah
+                   </a>
                 </div>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                
                  <table id="example2" class="table table-bordered table-striped">
                 <thead>
                     <tr class="text-center">

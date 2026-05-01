@@ -16,4 +16,5 @@ $routes->get('/', 'Home::index');
 $routes->get('/admin', 'Admin::index');
 $routes->get('/admin/setting', 'Admin::Setting');
 $routes->post('admin/updateSetting', 'Admin::updateSetting');
-$routes->get('/Wilayah', 'Wilayah::index');
+$routes->get('/wilayah', 'Wilayah::index');
+$routes->get('/wilayah/input', 'Wilayah::input');
