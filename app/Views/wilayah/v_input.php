@@ -26,7 +26,7 @@
 
         <div class="form-group">
           <label>GeoJSON</label>
-          <textarea name="geojson" class="form-control" cols="125" rows="10"></textarea>
+          <textarea name="geojson" class="form-control" cols="125F" rows="10"></textarea>
         </div>
 
         <button class="btn btn-primary" type="submit">simpan</button>
