@@ -13,7 +13,7 @@ Options -Indexes
 
 	# If you installed CodeIgniter in a subfolder, you will need to
 	# change the following line to match the subfolder you need.
-	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+	# http://httpd.apache.org/docs/current/mod/mod_rewrite.htmlrewritebase
 	# RewriteBase /
 
 	# Redirect Trailing Slashes...
@@ -31,7 +31,8 @@ Options -Indexes
 	# request to the front controller, index.php
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([\s\S]*)$ index.php/$1 [L,NC,QSA]
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+
 
 	# Ensure Authorization header is passed along
 	RewriteCond %{HTTP:Authorization} .

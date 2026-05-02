@@ -10,7 +10,7 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(false);
+$routes->setAutoRoute(true);
 
 $routes->get('/', 'Home::index');
 $routes->get('/admin', 'Admin::index');
