@@ -22,4 +22,6 @@ $routes->post('wilayah/input', 'Wilayah::input');
 $routes->post('wilayah/insertData', 'Wilayah::insertData');
 $routes->get('Wilayah', 'Wilayah::index'); // Untuk huruf kapital
 $routes->get('wilayah', 'Wilayah::index'); // Untuk huruf kecil
+$routes->get('wilayah/edit/(:num)', 'Wilayah::edit/$1'); 
+$routes->post('wilayah/updatedata/(:num)', 'Wilayah::UpdateData/$1');
 
