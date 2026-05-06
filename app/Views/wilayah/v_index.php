@@ -47,7 +47,8 @@
                             <td style="background-color: <?= $value['warna'] ?>;"></td>
                             <td class="text-center">
                                 <a href="<?= base_url('wilayah/edit/' . $value['id_wilayah']) ?>" class="btn btn-sm btn-warning btn-flat"><i class="fas fa-pencil-alt"></i></a>
-                                <button class="btn btn-sm btn-danger btn-flat"><i class="fas fa-trash"></i></button>
+                                <a href="<?= base_url('wilayah/delete/' . $value['id_wilayah']) ?>" onclick="return confirm('Yakin Hapus Data..?')" class="btn btn-sm btn-danger btn-flat"><i class="fas fa-trash"></i></a>
+                                
                             </td>
                         </tr>
                     <?php } ?>
