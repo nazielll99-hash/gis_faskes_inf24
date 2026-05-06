@@ -23,5 +23,5 @@ $routes->get('Wilayah', 'Wilayah::index'); // Untuk huruf kapital
 $routes->get('wilayah', 'Wilayah::index'); // Untuk huruf kecil
 $routes->get('wilayah/edit/(:num)', 'Wilayah::edit/$1'); 
 $routes->post('wilayah/updatedata/(:num)', 'Wilayah::UpdateData/$1');
-
+$routes->get('wilayah/delete/(:any)', 'Wilayah::Delete/$1');
 

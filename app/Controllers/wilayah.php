@@ -126,5 +126,14 @@ public function UpdateData($id_wilayah)
             return redirect()->to('Wilayah/Input')->withInput();
         }
     }
-
+        public function Delete($id_wilayah)
+    {
+    $data = [
+        'id_wilayah' => $id_wilayah,
+    ];
+    
+    $this->ModelWilayah->deleteData($data);
+    session()->setFlashdata('delete', 'Data Berhasil Didelete !!');
+    return redirect()->to('Wilayah');
+    }
     }
