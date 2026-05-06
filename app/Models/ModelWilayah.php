@@ -29,4 +29,6 @@ class ModelWilayah extends Model
         ->where('id_wilayah', $data['id_wilayah'])
         ->update($data);
 }
+
+
 }
