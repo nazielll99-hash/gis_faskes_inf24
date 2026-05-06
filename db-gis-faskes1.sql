@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 06, 2026 at 12:57 PM
+-- Generation Time: May 06, 2026 at 01:10 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.5.3
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db-gis-faskes`
+-- Database: `db-gis-faskes1`
 --
 
 -- --------------------------------------------------------
@@ -7843,7 +7843,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_wilayah`
 --
 ALTER TABLE `tbl_wilayah`
-  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
