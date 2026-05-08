@@ -17,6 +17,7 @@ class Admin extends BaseController
     {
         $data = [
             'judul' => 'Dashboard',
+            'menu' => 'dashboard',
             'page' => 'v_dashboard',
         ];
         return view('v_template_back_end', $data);

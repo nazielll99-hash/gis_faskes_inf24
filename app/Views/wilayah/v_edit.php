@@ -57,7 +57,7 @@
 
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Simpan</button>
-                <a href="<?= base_url('wilayah') ?>" class="btn btn-success btn-flat">Kembali</a>
+                <a href="<?= base_url('Wilayah') ?>" class="btn btn-success btn-flat">Kembali</a>
             </div>
 
             <?php echo form_close() ?>
