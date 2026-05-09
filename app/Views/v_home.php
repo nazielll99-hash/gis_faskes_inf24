@@ -18,8 +18,8 @@
 
     // Inisialisasi map (CUKUP SEKALI)
     var map = L.map('map', {
-        center: [-7.282942510438273, 109.05719608128057],
-        zoom: 12,
+        center: [<?= $web['coordinat_wilayah']?>],
+        zoom:<?= $web['zoom_view']?> ,
         layers: [peta1]
     });
 
@@ -33,4 +33,15 @@
 
     // Tambahkan kontrol layer
     L.control.layers(baseMaps).addTo(map);
+    <?php foreach ($wilayah as $key => $value) { ?>
+        L.geoJSON(<?= $value['geojson'] ?>, {
+                fillColor: '<?= $value['warna'] ?>',
+                fillOpacity: 0.5,
+                color: 'white',
+                weight: 1
+            })
+            .bindPopup("<b><?= $value['nama_wilayah'] ?></b>")
+            .addTo(map);
+    <?php } ?>
+
 </script>
