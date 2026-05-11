@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 06, 2026 at 01:10 PM
+-- Generation Time: May 09, 2026 at 01:10 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.5.3
 
@@ -29,29 +29,25 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_faskes` (
   `id_faskes` int NOT NULL,
-  `id_jenis` int DEFAULT NULL,
   `nama_faskes` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `akreditasi` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `akreditasi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jenis` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `koordinat` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `alamat` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `id_provinsi` int DEFAULT NULL,
   `id_kabupaten` int DEFAULT NULL,
-  `id_kecamatan` int DEFAULT NULL
+  `id_kecamatan` int DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `tbl_jenis_faskes`
+-- Dumping data for table `tbl_faskes`
 --
 
-CREATE TABLE `tbl_jenis_faskes` (
-  `id_jenis` int NOT NULL,
-  `jenis_faskes` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `marker` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `tbl_faskes` (`id_faskes`, `nama_faskes`, `akreditasi`, `jenis`, `koordinat`, `foto`, `alamat`, `id_provinsi`, `id_kabupaten`, `id_kecamatan`, `status`) VALUES
+(1, 'RSU Muhammadiyah Siti Aminah Bumiayu', 'paripurna', 'rumah sakit', '-7.264980429920643, 109.01224768075073', 'RSUDBumiayu.jpg', ' Jl. Pangeran Diponegoro, Karangdempul Barat.', NULL, NULL, NULL, 'swasta'),
+(2, 'RSUD Bumiayu', 'paripurna', 'rumah sakit', '-7.253060443573255, 109.01035940566392', 'RSUMuhammadiyah.jpg', 'Jl. K.H. Ahmad Dahlan No.KM. 1, Krajan Dua, Kalierang.', NULL, NULL, NULL, 'swasta');
 
 -- --------------------------------------------------------
 
@@ -584,6 +580,27 @@ INSERT INTO `tbl_kabupaten` (`id_kabupaten`, `id_provinsi`, `nama_kabupaten`) VA
 ('9435', '94', 'KABUPATEN INTAN JAYA'),
 ('9436', '94', 'KABUPATEN DEIYAI'),
 ('9471', '94', 'KOTA JAYAPURA');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_kategori`
+--
+
+CREATE TABLE `tbl_kategori` (
+  `id_kategori` int NOT NULL,
+  `kategori` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `marker` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_kategori`
+--
+
+INSERT INTO `tbl_kategori` (`id_kategori`, `kategori`, `marker`) VALUES
+(1, 'RumahSakit', 'rumahsakit.png'),
+(2, 'Puskesmas', 'puskesmas.png'),
+(3, 'Klinik', 'klinik.png');
 
 -- --------------------------------------------------------
 
@@ -7768,17 +7785,17 @@ ALTER TABLE `tbl_faskes`
   ADD PRIMARY KEY (`id_faskes`);
 
 --
--- Indexes for table `tbl_jenis_faskes`
---
-ALTER TABLE `tbl_jenis_faskes`
-  ADD PRIMARY KEY (`id_jenis`);
-
---
 -- Indexes for table `tbl_kabupaten`
 --
 ALTER TABLE `tbl_kabupaten`
   ADD PRIMARY KEY (`id_kabupaten`) USING BTREE,
   ADD KEY `regencies_province_id_index` (`id_provinsi`) USING BTREE;
+
+--
+-- Indexes for table `tbl_kategori`
+--
+ALTER TABLE `tbl_kategori`
+  ADD PRIMARY KEY (`id_kategori`);
 
 --
 -- Indexes for table `tbl_kecamatan`
@@ -7819,13 +7836,13 @@ ALTER TABLE `tbl_wilayah`
 -- AUTO_INCREMENT for table `tbl_faskes`
 --
 ALTER TABLE `tbl_faskes`
-  MODIFY `id_faskes` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_faskes` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tbl_jenis_faskes`
+-- AUTO_INCREMENT for table `tbl_kategori`
 --
-ALTER TABLE `tbl_jenis_faskes`
-  MODIFY `id_jenis` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tbl_kategori`
+  MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_setting`
@@ -7843,7 +7860,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_wilayah`
 --
 ALTER TABLE `tbl_wilayah`
-  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
