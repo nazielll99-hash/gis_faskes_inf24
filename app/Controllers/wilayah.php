@@ -137,4 +137,4 @@ public function UpdateData($id_wilayah)
     session()->setFlashdata('delete', 'Data Berhasil Didelete !!');
     return redirect()->to('Wilayah');
     }
-    }
+}

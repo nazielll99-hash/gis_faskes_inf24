@@ -47,10 +47,10 @@
                         <tr>
                             <td class="text-center"><?= $no++ ?></td>
                             <td><?= $value['nama_faskes'] ?></td>
-                             <td class="text-center"><?= $value['status'] ?></td>
-                             <td class="text-center"><?= $value['akreditasi'] ?></td>
-                             <td><?= $value['alamat'] ?></td>
-                             <td><?= $value['foto'] ?></td>
+                            <td class="text-center"><?= $value['status'] ?></td>
+                            <td class="text-center"><?= $value['akreditasi'] ?></td>
+                            <td><?= $value['alamat'] ?></td>
+                            <td class="text-center"><img src="<?= base_url('foto/' . $value['foto']) ?>" alt="" width="150px" height= "100px"></td>
                             
                             <td class="text-center">
                                 <a href="<?= base_url('faskes/edit/' . $value['id_faskes']) ?>" class="btn btn-xs btn-success btn-flat"><i class="fas fa-eye"></i></a>
@@ -66,7 +66,7 @@
         </div>
     </div>
 </div>
- <script>
+<script>
     // Inisialisasi DataTable
     $(document).ready(function () {
 

@@ -28,7 +28,15 @@ class Faskes extends BaseController
             ];
         return view('v_template_back_end', $data);
     }
-
-    
-
+    public function input()
+    {
+    $data = [
+        'judul' => 'Input Faskes',
+        'menu'  => 'faskes',
+        'page'  => 'faskes/v_input',
+        'web' => $this->ModelSetting->DataWeb(),
+        
+        ];
+    return view('v_template_back_end', $data);
+    }
 }

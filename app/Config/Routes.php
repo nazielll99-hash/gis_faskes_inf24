@@ -27,4 +27,5 @@ $routes->get('Wilayah/delete/(:any)', 'Wilayah::Delete/$1');
 $routes->get('/user', 'User::index');
 $routes->get('/kategori', 'Kategori::index');
 $routes->get('/faskes', 'Faskes::index');
+$routes->get('faskes/input', 'Faskes::input');
 

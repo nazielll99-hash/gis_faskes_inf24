@@ -16,7 +16,7 @@ class Home extends BaseController
             'judul' => 'Home',
             'page' => 'v_home',
             'web' => $this->ModelSetting->DataWeb(),
-             'wilayah' => $this->ModelWilayah->AllData(),
+            'wilayah' => $this->ModelWilayah->AllData(),
         ];
         return view('v_template_front_end', $data);
     }
