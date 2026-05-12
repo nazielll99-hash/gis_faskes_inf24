@@ -28,4 +28,5 @@ $routes->get('/user', 'User::index');
 $routes->get('/kategori', 'Kategori::index');
 $routes->get('/faskes', 'Faskes::index');
 $routes->get('faskes/input', 'Faskes::input');
-
+$routes->get('faskes/getKabupaten/(:any)', 'Faskes::getKabupaten/$1');
+$routes->get('faskes/getKecamatan/(:any)', 'Faskes::getKecamatan/$1');
