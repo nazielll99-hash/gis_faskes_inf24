@@ -55,7 +55,7 @@
 
             <!-- KOORDINAT (Disembunyikan otomatis jika ingin bersih, atau biarkan readonly) -->
             <div class="form-group">
-                <input type="text" id="coordinat" name="coordinat" value="<?= old('coordinat') ?>" placeholder="Coordinat Faskes" class="form-control" readonly>
+                <input type="text" id="coordinat" name="coordinat" id="Coordinat" value="<?= old('coordinat') ?>" placeholder="Coordinat Faskes" class="form-control" readonly>
                 <p class="text-danger"><?= $validation->hasError('coordinat') ? $validation->getError('coordinat') : '' ?></p>
             </div>
 
@@ -141,45 +141,66 @@
 </div>
 
 <script>
-    // Inisialisasi Basemap Leaflet
-    var peta1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-    });
+  var peta1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  });
+  var peta2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri'
+  });
+  var peta3 = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap & CartoDB'
+  });
+  var peta4 = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap & CartoDB'
+  });
 
-    var peta2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri'
-    });
+  var map = L.map('map', {
+    center: [-7.282942510438273, 109.05719608128057],
+    zoom: 12,
+    layers: [peta1]
+  });
 
-    var peta3 = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap & CartoDB'
-    });
+  var baseMaps = {
+    "OSM": peta1,
+    "Satellite": peta2,
+    "Light": peta3,
+    "Dark": peta4
+  };
+  L.control.layers(baseMaps).addTo(map);
 
-    // Inisialisasi Peta Utama (Gunakan peta satelit peta2 sebagai default agar menyerupai target gambar)
-    var map = L.map('map', {
-        center: [-7.28294, 109.05719],
-        zoom: 13,
-        layers: [peta2]
-    });
+  var coordinatInput = document.getElementById("coordinat");
+  var curLocation = [<?= $web['coordinat_wilayah'] ?? '-7.282942510438273, 109.05719608128057' ?>];
 
-    var baseMaps = {
-        "Satelit (Esri)": peta2,
-        "OpenStreetMap": peta1,
-        "Light Carto": peta3
-    };
+  var marker = new L.marker(curLocation, {
+    draggable: true
+  }).addTo(map);
 
-    L.control.layers(baseMaps).addTo(map);
+  marker.on('dragend', function(e) {
+    var position = marker.getLatLng();
+    marker.setLatLng(position).bindPopup(position.lat + "," + position.lng).update();
+    coordinatInput.value = position.lat + "," + position.lng;
+  });
 
-    // Penanda Marker Dinamis untuk menangkap data koordinat klik ke Input Form
-    var marker;
-    map.on('click', function(e) {
-        var lat = e.latlng.lat;
-        var lng = e.latlng.lng;
-        
-        if (marker) {
-            map.removeLayer(marker);
-        }
-        
-        marker = L.marker([lat, lng]).addTo(map);
-        document.getElementById('coordinat').value = lat + "," + lng;
-    });
+  map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    marker.setLatLng(e.latlng);
+    coordinatInput.value = lat + "," + lng;
+  });
+
+  //mengambil coordinat saat map onclick
+map.on("click", function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    if (!marker) {
+        marker = L.marker(e.latlng).addTo(map);
+    } else {
+        marker.setLatLng(e.latlng);
+    }
+    coordinatInput.value = lat + ',' + lng;
+});
+
+  setTimeout(function() {
+    map.invalidateSize();
+  }, 500);
 </script>
