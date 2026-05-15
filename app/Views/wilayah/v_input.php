@@ -11,7 +11,8 @@
             $validation = session()->get('validation') ?? \Config\Services::validation();
             ?>
 
-            <?php echo form_open('Wilayah/InsertData') ?>
+        <?php echo form_open('wilayah/insertdata') ?>
+
         
             <div class="row">
                 <div class="col-sm-6">

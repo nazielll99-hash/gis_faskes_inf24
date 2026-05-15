@@ -26,18 +26,17 @@ class Wilayah extends BaseController
         return view('v_template_back_end', $data);
     }
 
-
-    public function Input()
+    public function input()
     {
         $data = [
             'judul' => 'Input Wilayah',
-            'menu' => 'Wilayah',
+            'menu' => 'wilayah',
             'page' => 'Wilayah/v_input',
         ];
         return view('v_template_back_end', $data);
     }
 
-    public function InsertData()
+    public function insertdata()
     {
         if (
             $this->validate([
@@ -64,7 +63,6 @@ class Wilayah extends BaseController
                 ],
             ])
         ) {
-            // jika validasi berhasil
             $data = [
                 'nama_wilayah' => $this->request->getPost('nama_wilayah'),
                 'warna' => $this->request->getPost('warna'),
@@ -72,24 +70,24 @@ class Wilayah extends BaseController
             ];
             $this->ModelWilayah->InsertData($data);
             session()->setFlashdata('insert', 'Data Berhasil Ditambahkan !!');
-            return redirect()->to('Wilayah');
+            return redirect()->to('wilayah');
         } else {
-            // jika validasi gagal
             return redirect()->back()->withInput()->with('validation', $this->validator);
         }
     }
 
-    public function Edit($id_wilayah)
+    public function edit($id_wilayah)
     {
         $data = [
             'judul' => 'Edit Wilayah',
+            'menu' => 'wilayah',
             'page' => 'wilayah/v_edit',
-            // Tambahkan baris di bawah ini untuk mengambil data berdasarkan ID
             'wilayah' => $this->ModelWilayah->DetailData($id_wilayah),
         ];
         return view('v_template_back_end', $data);
     }
-    public function UpdateData($id_wilayah)
+
+    public function updatedata($id_wilayah)
     {
         $rules = [
             'nama_wilayah' => [
@@ -109,9 +107,7 @@ class Wilayah extends BaseController
             ],
         ];
 
-        // Memeriksa validasi
         if ($this->validate($rules)) {
-            // JIKA VALIDASI BERHASIL
             $data = [
                 'id_wilayah' => $id_wilayah,
                 'nama_wilayah' => $this->request->getPost('nama_wilayah'),
@@ -124,12 +120,11 @@ class Wilayah extends BaseController
             return redirect()->to('wilayah');
 
         } else {
-            // JIKA VALIDASI GAGAL
-            // withInput() mengirimkan data form kembali agar bisa dibaca fungsi old()
-            return redirect()->to('Wilayah/Input')->withInput();
+            return redirect()->to('wilayah/input')->withInput();
         }
     }
-    public function Delete($id_wilayah)
+
+    public function delete($id_wilayah)
     {
         $data = [
             'id_wilayah' => $id_wilayah,
@@ -137,6 +132,6 @@ class Wilayah extends BaseController
 
         $this->ModelWilayah->deleteData($data);
         session()->setFlashdata('delete', 'Data Berhasil Didelete !!');
-        return redirect()->to('Wilayah');
+        return redirect()->to('wilayah');
     }
 }

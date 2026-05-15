@@ -134,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="<?= base_url('Admin') ?>" class="nav-link <?= ($menu == 'dashboard') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin') ?>" class="nav-link <?= ($menu == 'dashboard') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   dashboard
@@ -143,7 +143,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url('Wilayah') ?>" class="nav-link <?= ($menu == 'wilayah') ? 'active' : '' ?>" >
+              <a href="<?= base_url('wilayah') ?>" class="nav-link <?= ($menu == 'wilayah') ? 'active' : '' ?>" >
                 <i class="nav-icon fas fa-layer-group"></i>
                 <p>
                   wilayah
