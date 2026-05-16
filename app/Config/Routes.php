@@ -32,3 +32,6 @@ $routes->get('faskes/input', 'Faskes::input');
 $routes->post('faskes/insertdata', 'Faskes::insertdata');
 $routes->get('faskes/getKabupaten/(:any)', 'Faskes::getKabupaten/$1');
 $routes->get('faskes/getKecamatan/(:any)', 'Faskes::getKecamatan/$1');
+$routes->get('faskes/edit/(:num)', 'Faskes::edit/$1');
+$routes->post('faskes/updatedata/(:num)', 'Faskes::updatedata/$1');
+$routes->get('faskes/delete/(:num)', 'Faskes::delete/$1');

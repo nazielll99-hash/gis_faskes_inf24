@@ -10,28 +10,29 @@
         </div>
 
         <div class="card-body">
-            <?php
-            if (session()->getFlashdata('pesan')) {
-                echo '<div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('pesan') . '</h5></div>';
-            }
-            if (session()->getFlashdata('insert')) {
-                echo '<div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('insert') . '</h5></div>';
-            }
-            if (session()->getFlashdata('update')) {
-                echo '<div class="alert alert-primary alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('update') . '</h5></div>';
-            }
-            if (session()->getFlashdata('delete')) {
-                echo '<div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('delete') . '</h5></div>';
-            }
-            ?>
+        <?php
+        if (session()->getFlashdata('pesan')) {
+            echo '<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('pesan') . '</h5></div>';
+        }
+        if (session()->getFlashdata('insert')) {
+            echo '<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('insert') . '</h5></div>';
+        }
+        if (session()->getFlashdata('update')) {
+            echo '<div class="alert alert-primary alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('update') . '</h5></div>';
+        }
+        if (session()->getFlashdata('delete')) {
+            echo '<div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> ' . session()->getFlashdata('delete') . '</h5></div>';
+        }
+        ?>
+
 
             <table id="example2" class="table table-sm table-bordered table-striped">
                 <thead>
