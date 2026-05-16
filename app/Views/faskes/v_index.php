@@ -11,7 +11,11 @@
 
         <div class="card-body">
             <?php
-            // Menampilkan notifikasi data berhasil disimpan/diupdate
+            if (session()->getFlashdata('pesan')) {
+                echo '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-check"></i> ' . session()->getFlashdata('pesan') . '</h5></div>';
+            }
             if (session()->getFlashdata('insert')) {
                 echo '<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -34,6 +38,7 @@
                     <tr class="text-center">
                         <th width="50px">No</th>
                         <th>Nama faskes</th>
+                        <th>Jenis</th>
                         <th>Status</th>
                         <th>Akreditasi</th>
                         <th>Alamat</th>
@@ -47,34 +52,27 @@
                         <tr>
                             <td class="text-center"><?= $no++ ?></td>
                             <td><?= $value['nama_faskes'] ?></td>
+                            <td class="text-center"><?= ucwords($value['jenis'] ?? '') ?></td>
                             <td class="text-center"><?= $value['status'] ?></td>
                             <td class="text-center"><?= $value['akreditasi'] ?></td>
                             <td><?= $value['alamat'] ?></td>
-                            <td class="text-center"><img src="<?= base_url('foto/' . $value['foto']) ?>" alt=""
-                                    width="150px" height="100px"></td>
+                            <td class="text-center"><img src="<?= base_url('foto/' . $value['foto']) ?>" alt="" width="150px" height="100px"></td>
 
                             <td class="text-center">
-                                <a href="<?= base_url('faskes/edit/' . $value['id_faskes']) ?>"
-                                    class="btn btn-xs btn-success btn-flat"><i class="fas fa-eye"></i></a>
-                                <a href="<?= base_url('faskes/edit/' . $value['id_faskes']) ?>"
-                                    class="btn btn-xs btn-warning btn-flat"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="<?= base_url('faskes/delete/' . $value['id_faskes']) ?>"
-                                    onclick="return confirm('Yakin Hapus Data..?')"
-                                    class="btn btn-xs btn-danger btn-flat"><i class="fas fa-trash"></i></a>
-
+                                <a href="<?= base_url('faskes/edit/' . $value['id_faskes']) ?>" class="btn btn-xs btn-success btn-flat"><i class="fas fa-eye"></i></a>
+                                <a href="<?= base_url('faskes/edit/' . $value['id_faskes']) ?>" class="btn btn-xs btn-warning btn-flat"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="<?= base_url('faskes/delete/' . $value['id_faskes']) ?>" onclick="return confirm('Yakin Hapus Data..?')" class="btn btn-xs btn-danger btn-flat"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php } ?>
-
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<script>
-    // Inisialisasi DataTable
-    $(document).ready(function () {
 
+<script>
+    $(document).ready(function () {
         $('#example2').DataTable({
             paging: true,
             lengthChange: true,
@@ -84,6 +82,5 @@
             autoWidth: false,
             responsive: true
         });
-
     });
 </script>

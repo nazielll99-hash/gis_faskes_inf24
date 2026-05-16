@@ -6,18 +6,17 @@
 
         <div class="card-body">
             <?php
-            session();
-            $validation = session()->get('validation') ?? \Config\Services::validation();
+            $validation = session()->getFlashdata('validation') ?? \Config\Services::validation();
             ?>
 
-            <?= form_open_multipart('Faskes/InsertData') ?>
+            <?= form_open_multipart('faskes/insertdata') ?>
 
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Nama Faskes</label>
                         <input type="text" name="nama_faskes" value="<?= old('nama_faskes') ?>" placeholder="Nama Faskes" class="form-control">
-                        <p class="text-danger"><?= $validation->hasError('nama_faskes') ? $validation->getError('nama_faskes') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('nama_faskes') ?></p>
                     </div>
                 </div>
 
@@ -25,7 +24,7 @@
                     <div class="form-group">
                         <label>Akreditasi</label>
                         <input type="text" name="akreditasi" value="<?= old('akreditasi') ?>" placeholder="Akreditasi" class="form-control">
-                        <p class="text-danger"><?= $validation->hasError('akreditasi') ? $validation->getError('akreditasi') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('akreditasi') ?></p>
                     </div>
                 </div>
 
@@ -37,8 +36,21 @@
                             <option value="Negeri" <?= old('status') == 'Negeri' ? 'selected' : '' ?>>Negeri</option>
                             <option value="Swasta" <?= old('status') == 'Swasta' ? 'selected' : '' ?>>Swasta</option>
                         </select>
-                        <p class="text-danger"><?= $validation->hasError('status') ? $validation->getError('status') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('status') ?></p>
                     </div>
+                </div>
+            </div>
+
+                        <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Jenis Faskes</label>
+                    <select name="jenis" class="form-control">
+                        <option value="">-- Pilih Jenis --</option>
+                        <option value="puskesmas" <?= old('jenis') == 'puskesmas' ? 'selected' : '' ?>>Puskesmas</option>
+                        <option value="klinik" <?= old('jenis') == 'klinik' ? 'selected' : '' ?>>Klinik</option>
+                        <option value="rumah sakit" <?= old('jenis') == 'rumah sakit' ? 'selected' : '' ?>>Rumah Sakit</option>
+                    </select>
+                    <p class="text-danger"><?= $validation->getError('jenis') ?></p>
                 </div>
             </div>
 
@@ -49,7 +61,7 @@
             <div class="form-group">
                 <label>Koordinat</label>
                 <input type="text" id="coordinat" name="coordinat" value="<?= old('coordinat') ?>" placeholder="Koordinat Faskes" class="form-control" readonly>
-                <p class="text-danger"><?= $validation->hasError('coordinat') ? $validation->getError('coordinat') : '' ?></p>
+                <p class="text-danger"><?= $validation->getError('coordinat') ?></p>
             </div>
 
             <div class="row">
@@ -59,10 +71,10 @@
                         <select name="id_provinsi" id="id_provinsi" class="form-control select2">
                             <option value="">-- Pilih Provinsi --</option>
                             <?php foreach ($provinsi as $key => $value) { ?>
-                                <option value="<?= $value['id_provinsi'] ?>"><?= $value['nama_provinsi'] ?></option>
+                                <option value="<?= $value['id_provinsi'] ?>" <?= old('id_provinsi') == $value['id_provinsi'] ? 'selected' : '' ?>><?= $value['nama_provinsi'] ?></option>
                             <?php } ?>
                         </select>
-                        <p class="text-danger"><?= $validation->hasError('id_provinsi') ? $validation->getError('id_provinsi') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('id_provinsi') ?></p>
                     </div>
                 </div>
 
@@ -72,7 +84,7 @@
                         <select name="id_kabupaten" id="id_kabupaten" class="form-control select2">
                             <option value="">-- Pilih Kabupaten --</option>
                         </select>
-                        <p class="text-danger"><?= $validation->hasError('id_kabupaten') ? $validation->getError('id_kabupaten') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('id_kabupaten') ?></p>
                     </div>
                 </div>
 
@@ -82,21 +94,21 @@
                         <select name="id_kecamatan" id="id_kecamatan" class="form-control select2">
                             <option value="">-- Pilih Kecamatan --</option>
                         </select>
-                        <p class="text-danger"><?= $validation->hasError('id_kecamatan') ? $validation->getError('id_kecamatan') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('id_kecamatan') ?></p>
                     </div>
                 </div>
 
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label>Wilayah Administrasi</label>
-                        <select name="wilayah_administratif" class="form-control select2">
+                        <label>Administrasi</label>
+                        <select name="administrasi" class="form-control select2">
                             <option value="">-- Pilih Wilayah --</option>
-                            <option value="Perkotaan">Perkotaan</option>
-                            <option value="Pedesaan">Pedesaan</option>
-                            <option value="Terpencil">Terpencil</option>
-                            <option value="Sangat Terpencil">Sangat Terpencil</option>
+                            <option value="Perkotaan" <?= old('administrasi') == 'Perkotaan' ? 'selected' : '' ?>>Perkotaan</option>
+                            <option value="Pedesaan" <?= old('administrasi') == 'Pedesaan' ? 'selected' : '' ?>>Pedesaan</option>
+                            <option value="Terpencil" <?= old('administrasi') == 'Terpencil' ? 'selected' : '' ?>>Terpencil</option>
+                            <option value="Sangat Terpencil" <?= old('administrasi') == 'Sangat Terpencil' ? 'selected' : '' ?>>Sangat Terpencil</option>
                         </select>
-                        <p class="text-danger"><?= $validation->hasError('wilayah_administratif') ? $validation->getError('wilayah_administratif') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('administrasi') ?></p>
                     </div>
                 </div>
             </div>
@@ -106,7 +118,7 @@
                     <div class="form-group">
                         <label>Alamat</label>
                         <textarea name="alamat" placeholder="Alamat Faskes" class="form-control" rows="3"><?= old('alamat') ?></textarea>
-                        <p class="text-danger"><?= $validation->hasError('alamat') ? $validation->getError('alamat') : '' ?></p>
+                        <p class="text-danger"><?= $validation->getError('alamat') ?></p>
                     </div>
                 </div>
             </div>
@@ -115,11 +127,13 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label>Foto Faskes</label>
-                        <input type="file" accept=".jpg" name="foto" class="form-control">
-                        <p class="text-danger"><?= $validation->hasError('foto') ? $validation->getError('foto') : '' ?></p>
+                        <input type="file" accept=".jpg,.jpeg,.png" name="foto" class="form-control" required>
                     </div>
                 </div>
             </div>
+
+
+
 
             <div class="form-group mt-3">
                 <button class="btn btn-primary btn-flat" type="submit">Simpan</button>
@@ -131,8 +145,8 @@
     </div>
 </div>
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="https://jsdelivr.net" rel="stylesheet" />
+<script src="https://jsdelivr.net"></script>
 
 <script>
     $(document).ready(function() {
@@ -169,7 +183,7 @@
                 });
             }
         });
-    });
+    }); 
 
     var peta1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
@@ -177,15 +191,21 @@
     var peta2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri'
     });
+
     var peta3 = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap & CartoDB'
     });
+
     var peta4 = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap & CartoDB'
     });
 
+
+    var defaultLat = -7.282942510438273;
+    var defaultLng = 109.05719608128057;
+
     var map = L.map('map', {
-        center: [-7.282942510438273, 109.05719608128057],
+        center: [defaultLat, defaultLng],
         zoom: 12,
         layers: [peta1]
     });
@@ -199,9 +219,25 @@
     L.control.layers(baseMaps).addTo(map);
 
     var coordinatInput = document.getElementById("coordinat");
-    var curLocation = [<?= $web['coordinat_wilayah'] ?? '-7.282942510438273, 109.05719608128057' ?>];
 
-    var marker = new L.marker(curLocation, {
+    var curLocation = [];
+    var oldCoordinat = "<?= old('coordinat') ?>";
+    var webCoordinat = "<?= $web['coordinat_wilayah'] ?? '' ?>";
+
+    if (oldCoordinat != "") {
+        curLocation = oldCoordinat.split(",");
+    } else if (webCoordinat != "") {
+        curLocation = webCoordinat.split(",");
+    } else {
+        curLocation = [defaultLat, defaultLng];
+    }
+
+    var markerLat = parseFloat(curLocation[0]);
+    var markerLng = parseFloat(curLocation[1]);
+
+    map.setView([markerLat, markerLng], 12);
+
+    var marker = new L.marker([markerLat, markerLng], {
         draggable: true
     }).addTo(map);
 
