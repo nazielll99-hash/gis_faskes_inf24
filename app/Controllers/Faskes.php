@@ -225,8 +225,11 @@ class Faskes extends BaseController
     {
         $faskes = $this->ModelFaskes->DetailData($id_faskes);
         
-        if ($faskes['foto'] != '' && file_exists('foto/' . $faskes['foto'])) {
-            unlink('foto/' . $faskes['foto']);
+        if ($faskes && $faskes['foto'] != '') {
+            $pathFoto = FCPATH . 'foto/' . $faskes['foto'];
+            if (file_exists($pathFoto)) {
+                unlink($pathFoto);
+            }
         }
 
         $data = [
