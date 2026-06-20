@@ -35,3 +35,4 @@ $routes->get('faskes/getKecamatan/(:any)', 'Faskes::getKecamatan/$1');
 $routes->get('faskes/edit/(:num)', 'Faskes::edit/$1');
 $routes->post('faskes/updatedata/(:num)', 'Faskes::updatedata/$1');
 $routes->get('faskes/delete/(:num)', 'Faskes::delete/$1');
+$routes->get('faskes/detail/(:num)', 'Faskes::detail/$1');

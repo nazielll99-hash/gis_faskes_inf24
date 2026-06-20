@@ -241,7 +241,17 @@ class Faskes extends BaseController
         return redirect()->to(base_url('faskes'));
     }
 
-
+    public function detail($id_faskes)
+    {
+        $data = [
+            'judul' => 'Detail Faskes',
+            'menu'  => 'faskes',
+            'page'  => 'faskes/v_detail',
+            'web' => $this->ModelSetting->DataWeb(),
+            'faskes' => $this->ModelFaskes->DetailData($id_faskes),
+        ];
+        return view('v_template_back_end', $data);
+    }
 
     public function getKabupaten($id_provinsi)
     {
