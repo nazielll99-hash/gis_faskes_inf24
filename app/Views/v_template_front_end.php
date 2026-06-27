@@ -102,7 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Right navbar links -->
             <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="auth/login">
                   <i class="fas fa-sign-in-alt"></i> Login
                 </a>
               </li>

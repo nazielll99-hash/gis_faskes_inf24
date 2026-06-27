@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 09, 2026 at 01:10 PM
+-- Generation Time: Jun 27, 2026 at 07:59 AM
 -- Server version: 8.0.30
--- PHP Version: 8.5.3
+-- PHP Version: 8.5.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -7747,8 +7747,17 @@ CREATE TABLE `tbl_user` (
   `id_user` int NOT NULL,
   `nama_user` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foto` text COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`id_user`, `nama_user`, `email`, `password`, `foto`) VALUES
+(1, 'fsakes', 'admin@gmail.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'rs.jpg'),
+(15, 'sandol', 'sandol123@gmail.com', '562372b549ea10f804ccd5f4c59bf98c', NULL);
 
 -- --------------------------------------------------------
 
@@ -7854,7 +7863,7 @@ ALTER TABLE `tbl_setting`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_wilayah`

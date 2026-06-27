@@ -36,3 +36,31 @@ $routes->get('faskes/edit/(:num)', 'Faskes::edit/$1');
 $routes->post('faskes/updatedata/(:num)', 'Faskes::updatedata/$1');
 $routes->get('faskes/delete/(:num)', 'Faskes::delete/$1');
 $routes->get('faskes/detail/(:num)', 'Faskes::detail/$1');
+
+// Matikan auto-routing demi keamanan (opsional, tapi disarankan)
+$routes->setAutoRoute(false);
+
+// ─── AUTH ────────────────────────────────────────────────────────────────────
+// ─── AUTH ────────────────────────────────────────────────────────────────────
+$routes->get('/',            'AuthController::index');       // Tetap redirect/tampilkan login di awal
+$routes->get('auth/login',   'AuthController::index');       // Tampilkan form di URL auth/login
+// Rute untuk menampilkan halaman form login (GET)
+$routes->get('login', 'AuthController::index');
+
+// Rute untuk memproses data form login saat disubmit (POST)
+$routes->post('login', 'AuthController::login');
+
+// ─── DASHBOARD (dilindungi AuthFilter) ───────────────────────────────────────
+// Perbaikan: Tambahkan `use ($routes)` di bagian closure function
+$routes->group('dashboard', ['filter' => 'auth'], function () use ($routes) {
+
+    // Default dashboard
+    $routes->get('/', 'DashboardController::index');
+
+    // Dashboard per role
+    $routes->get('admin',       'DashboardController::admin',       ['filter' => 'auth:admin']);
+    $routes->get('dokter',      'DashboardController::dokter',      ['filter' => 'auth:dokter']);
+    $routes->get('perawat',     'DashboardController::perawat',     ['filter' => 'auth:perawat']);
+    $routes->get('apoteker',    'DashboardController::apoteker',    ['filter' => 'auth:apoteker']);
+    $routes->get('resepsionis', 'DashboardController::resepsionis', ['filter' => 'auth:resepsionis']);
+});
