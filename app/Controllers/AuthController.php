@@ -5,12 +5,6 @@ namespace App\Controllers;
 use App\Models\AuthModel;
 use CodeIgniter\Controller;
 
-/**
- * AuthController
- *
- * Mengelola seluruh alur autentikasi:
- * login, logout, dan pengecekan sesi.
- */
 class AuthController extends Controller
 {
     protected AuthModel $authModel;
@@ -18,23 +12,15 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->authModel = new AuthModel();
-
-        // Load helper yang diperlukan
         helper(['url', 'form', 'session']);
     }
 
-    // ─────────────────────────────────────────────────
-    //  TAMPILKAN FORM LOGIN
-    // ─────────────────────────────────────────────────
-
-    /**
+ /**
      * GET /login
-     * Tampilkan halaman form login.
-     * Jika sudah login → redirect ke dashboard.
+     * Update bagian ini agar variabel $errors bisa dibaca oleh view
      */
     public function index(): string|\CodeIgniter\HTTP\RedirectResponse
     {
-        // Sudah login? langsung ke dashboard
         if (session()->get('user_id')) {
             return redirect()->to($this->getDashboardRoute());
         }
@@ -42,25 +28,21 @@ class AuthController extends Controller
         $data = [
             'title'      => 'Login — SIFASKES',
             'pageTitle'  => 'Masuk ke Sistem',
-            'validation' => \Config\Services::validation(),
+            'errors'     => session()->getFlashdata('errors') ?? [], // Melempar error validasi ke view
         ];
 
         return view('login', $data);
     }
 
-    // ─────────────────────────────────────────────────
-    //  PROSES LOGIN
-    // ─────────────────────────────────────────────────
-
     /**
      * POST /login
-     * Validasi input, verifikasi kredensial, set sesi.
+     * Mengubah rule dari 'username' menjadi 'email' agar sinkron dengan HTML
      */
     public function login(): \CodeIgniter\HTTP\RedirectResponse
     {
-        // 1. Validasi input (Diubah menggunakan label Email karena kolom username/NIK tidak ada di DB)
+        // 1. DIUBAH KEY-NYA: dari 'username' menjadi 'email' sesuai name="..." di view HTML
         $rules = [
-            'username' => [
+            'email' => [ 
                 'label'  => 'Email',
                 'rules'  => 'required|valid_email',
                 'errors' => [
@@ -84,11 +66,11 @@ class AuthController extends Controller
                              ->with('errors', $this->validator->getErrors());
         }
 
-        $identifier = trim($this->request->getPost('username')); // Berisi email dari form input
+        // 2. DIUBAH: mengambil POST 'email' bukan 'username'
+        $identifier = trim($this->request->getPost('email')); 
         $password   = $this->request->getPost('password');
         $remember   = $this->request->getPost('remember') === '1';
 
-        // 2. Cari user di database menggunakan email
         $user = $this->authModel->findByUsername($identifier);
 
         if (! $user || ! $this->authModel->verifyPassword($password, $user['password'])) {
@@ -97,74 +79,57 @@ class AuthController extends Controller
                              ->with('error', 'Email atau kata sandi tidak sesuai. Silakan periksa kembali.');
         }
 
-        // Keterangan: Pengecekan status 'is_active' dihapus karena kolomnya belum tersedia di database
-
-        // 3. Set data sesi (Disesuaikan dengan kolom riil di tbl_user)
         $sessionData = [
-            'user_id'    => $user['id_user'],          // Sesuai DB: id_user
-            'user_name'  => $user['nama_user'],        // Sesuai DB: nama_user
-            'email'      => $user['email'],            // Sesuai DB: email
-            'role'       => $user['role'] ?? 'admin',  // Fallback ke 'admin' karena kolom role belum ada di DB
-            'avatar'     => $user['foto'] ?? 'default.png', // Sesuai DB: foto
+            'user_id'    => $user['id_user'],
+            'user_name'  => $user['nama_user'],
+            'email'      => $user['email'],
+            'role'       => $user['role'],
+            'avatar'     => $user['foto'] ?? 'default.png',
             'is_logged'  => true,
         ];
         session()->set($sessionData);
 
-        // 4. Ingat saya (cookie 30 hari)
         if ($remember) {
             $token = bin2hex(random_bytes(32));
             setcookie('remember_token', $token, time() + (86400 * 30), '/', '', true, true);
         }
 
-        // Keterangan: Pemanggilan recordLastLogin dihapus karena kolomnya belum tersedia di database
-
-        // 5. Flash sukses & redirect ke dashboard sesuai role
         session()->setFlashdata('success', 'Selamat datang, ' . $user['nama_user'] . '!');
 
         return redirect()->to($this->getDashboardRoute($sessionData['role']));
     }
 
-    // ─────────────────────────────────────────────────
-    //  LOGOUT
-    // ─────────────────────────────────────────────────
-
     /**
      * GET /logout
-     * Hancurkan sesi dan redirect ke login.
      */
     public function logout(): \CodeIgniter\HTTP\RedirectResponse
     {
         session()->destroy();
-
-        // Hapus cookie remember
         setcookie('remember_token', '', time() - 3600, '/');
 
-        return redirect()->to('/login')
+        return redirect()->to('auth/login')
                          ->with('success', 'Anda telah berhasil keluar dari sistem.');
     }
 
-    // ─────────────────────────────────────────────────
-    //  HELPER PRIVAT
-    // ─────────────────────────────────────────────────
-
     /**
-     * Tentukan URL dashboard berdasarkan role pengguna.
-     *
-     * @param  string|null $role
-     * @return string
+     * Tentukan URL dashboard berdasarkan angka role (1 = admin, 2 = user).
      */
-    private function getDashboardRoute(?string $role = null): string
+/**
+     * Tentukan URL dashboard berdasarkan angka role (1 = admin, 2 = user).
+     * Disesuaikan dengan URL pada gambar image_11b143.jpg
+     */
+    private function getDashboardRoute($role = null): string
     {
-        $role = $role ?? session()->get('role');
+        // Mengonversi ke integer untuk memastikan kecocokan tipe data
+        $role = (int) ($role ?? session()->get('role'));
 
+        // Mengubah '/dashboard/admin' menjadi '/admin' sesuai dengan URL pada gambar browser Anda
         $routes = [
-            'admin'       => '/dashboard/admin',
-            'dokter'      => '/dashboard/dokter',
-            'perawat'     => '/dashboard/perawat',
-            'apoteker'    => '/dashboard/apoteker',
-            'resepsionis' => '/dashboard/resepsionis',
+            1 => '/admin', // Diarahkan ke localhost/.../public/admin
+            2 => '/user',  // Diarahkan ke localhost/.../public/user
         ];
 
-        return $routes[$role] ?? '/dashboard';
+        // Jika fallback tidak ditemukan di daftar, arahkan ke halaman utama /admin atau /
+        return $routes[$role] ?? '/admin';
     }
 }

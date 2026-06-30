@@ -49,6 +49,7 @@ $routes->get('login', 'AuthController::index');
 
 // Rute untuk memproses data form login saat disubmit (POST)
 $routes->post('login', 'AuthController::login');
+$routes->get('logout', 'AuthController::logout');
 
 // ─── DASHBOARD (dilindungi AuthFilter) ───────────────────────────────────────
 // Perbaikan: Tambahkan `use ($routes)` di bagian closure function
