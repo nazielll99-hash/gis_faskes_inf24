@@ -39,8 +39,8 @@
                     <tr class="text-center">
                         <th width="50px">No</th>
                         <th>Nama user</th>
-                        <th>Pasword</th>
                         <th>Email</th>
+                        <th>Password</th>
                         <th>Foto</th>
                         <th width="150px">Aksi</th>
                     </tr>
