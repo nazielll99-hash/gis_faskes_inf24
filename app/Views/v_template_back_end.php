@@ -106,15 +106,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="<?= base_url('AdminLTE') ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
-              alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
-          </div>
-        </div>
+<!-- Bagian Foto User di Sidebar -->
+<!-- Bagian Foto User di Sidebar -->
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+        <!-- DIUBAH: Menggunakan 'avatar' sesuai dengan AuthController -->
+        <img src="<?= base_url('foto/' . session()->get('avatar')) ?>" class="img-circle elevation-2" alt="User Image">
+    </div>
+    <div class="info">
+        <!-- DIUBAH: Menggunakan 'user_name' sesuai dengan AuthController -->
+        <a href="#" class="d-block"><?= session()->get('user_name') ?></a>
+    </div>
+</div>
 
         <!-- SidebarSearch Form -->
         <div class="form-inline">

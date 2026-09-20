@@ -12,60 +12,77 @@ class ModelFaskes extends Model
             ->get()->getResultArray();
     }
 
+    // Khusus untuk peta. Join ke kecamatan (ambil nama kecamatan,
+    // dipakai untuk sinkron dengan filter dropdown kecamatan di peta).
+    // CATATAN: tbl_faskes TIDAK punya kolom id_kategori, jadi pencocokan
+    // icon marker (RumahSakit/Puskesmas/Klinik) dilakukan di sisi
+    // JS/Controller lewat teks kolom "jenis", bukan lewat JOIN di sini.
+    public function AllDataMap()
+    {
+        return $this->db->table('tbl_faskes')
+            ->select('
+                tbl_faskes.*,
+                COALESCE(tbl_kecamatan.nama_kecamatan, "") AS nama_kecamatan,
+                COALESCE(tbl_faskes.id_kecamatan, "") AS id_kecamatan
+            ')
+            ->join('tbl_kecamatan', 'tbl_kecamatan.id_kecamatan = tbl_faskes.id_kecamatan', 'left')
+            ->get()->getResultArray();
+    }
+
     public function InsertData($data)
     {
         $this->db->table('tbl_faskes')->insert($data);
     }
 
-   public function DetailData($id_faskes)
-{
-    return $this->db->table('tbl_faskes')
-        ->select('
-            tbl_faskes.*,
-            tbl_kecamatan.nama_kecamatan AS kecamatan,
-            tbl_kabupaten.nama_kabupaten AS kabupaten,
-            tbl_provinsi.nama_provinsi AS provinsi
-        ')
-        ->join('tbl_kategori', 'tbl_kategori.id_kategori = tbl_faskes.id_kategori', 'left')
-        ->join('tbl_provinsi', 'tbl_provinsi.id_provinsi = tbl_faskes.id_provinsi', 'left')
-        ->join('tbl_kabupaten', 'tbl_kabupaten.id_kabupaten = tbl_faskes.id_kabupaten', 'left')
-        ->join('tbl_kecamatan', 'tbl_kecamatan.id_kecamatan = tbl_faskes.id_kecamatan', 'left')
-        ->join('tbl_wilayah', 'tbl_wilayah.id_wilayah = tbl_faskes.id_wilayah', 'left')
-        ->where('tbl_faskes.id_faskes', $id_faskes)
-        ->get()
-        ->getRowArray();
-}
-    public function UpdateData($data)
-{
-    $this->db->table('tbl_faskes')
-        ->where('id_faskes', $data['id_faskes'])
-        ->update($data);
-}
- public function deleteData($data)
-{
-    $this->db->table('tbl_faskes')
-        ->where('id_faskes', $data['id_faskes'])
-        ->delete($data);
-}
+    public function DetailData($id_faskes)
+    {
+        return $this->db->table('tbl_faskes')
+            ->select('
+                tbl_faskes.*,
+                tbl_kecamatan.nama_kecamatan AS kecamatan,
+                tbl_kabupaten.nama_kabupaten AS kabupaten,
+                tbl_provinsi.nama_provinsi AS provinsi
+            ')
+            ->join('tbl_provinsi', 'tbl_provinsi.id_provinsi = tbl_faskes.id_provinsi', 'left')
+            ->join('tbl_kabupaten', 'tbl_kabupaten.id_kabupaten = tbl_faskes.id_kabupaten', 'left')
+            ->join('tbl_kecamatan', 'tbl_kecamatan.id_kecamatan = tbl_faskes.id_kecamatan', 'left')
+            ->where('tbl_faskes.id_faskes', $id_faskes)
+            ->get()
+            ->getRowArray();
+    }
 
-//provinsi
-public function allProvinsi()
-{
-    return $this->db->table('tbl_provinsi')
-        ->orderBy('id_provinsi', 'ASC')
-        ->get()->getResultArray();
-}
-public function allKabupaten($id_provinsi)
-{
-    return $this->db->table('tbl_kabupaten')
-        ->where('id_provinsi', $id_provinsi)
-        ->get()->getResultArray();
-}
-public function allKecamatan($id_kabupaten)
-{
-    return $this->db->table('tbl_kecamatan')
-        ->where('id_kabupaten', $id_kabupaten)
-        ->get()->getResultArray();
-}
+    public function UpdateData($data)
+    {
+        $this->db->table('tbl_faskes')
+            ->where('id_faskes', $data['id_faskes'])
+            ->update($data);
+    }
+
+    public function deleteData($data)
+    {
+        $this->db->table('tbl_faskes')
+            ->where('id_faskes', $data['id_faskes'])
+            ->delete($data);
+    }
+
+    //provinsi
+    public function allProvinsi()
+    {
+        return $this->db->table('tbl_provinsi')
+            ->orderBy('id_provinsi', 'ASC')
+            ->get()->getResultArray();
+    }
+    public function allKabupaten($id_provinsi)
+    {
+        return $this->db->table('tbl_kabupaten')
+            ->where('id_provinsi', $id_provinsi)
+            ->get()->getResultArray();
+    }
+    public function allKecamatan($id_kabupaten)
+    {
+        return $this->db->table('tbl_kecamatan')
+            ->where('id_kabupaten', $id_kabupaten)
+            ->get()->getResultArray();
+    }
 
 }

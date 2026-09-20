@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Modeluser extends Model
+class ModelUser extends Model // Perbaikan: Ganti nama class menjadi ModelUser (U besar)
 {
     public function AllData()
     {
@@ -17,29 +17,27 @@ class Modeluser extends Model
         $this->db->table('tbl_user')->insert($data);
     }
 
-   public function DetailData($id_faskes)
-{
-    return $this->db->table('tbl_user')
-        ->select('
-            tbl_faskes.*,
-            tbl_kecamatan.nama_kecamatan AS kecamatan,
-            tbl_kabupaten.nama_kabupaten AS kabupaten,
-            tbl_provinsi.nama_provinsi AS provinsi
-        ')
-        ->where('tbl_faskes.id_faskes', $id_faskes)
-        ->get()
-        ->getRowArray();
-}
+    // === PERBAIKAN FUNGSI DETAIL DATA USER ===
+    public function DetailData($id_user)
+    {
+        // Diubah agar mengambil data dari tbl_user berdasarkan id_user
+        return $this->db->table('tbl_user')
+            ->where('id_user', $id_user)
+            ->get()
+            ->getRowArray();
+    }
+
     public function UpdateData($data)
-{
-    $this->db->table('tbl_user')
-        ->where('id_user', $data['id_user'])
-        ->update($data);
-}
- public function deleteData($data)
-{
-    $this->db->table('tbl_user')
-        ->where('id_user', $data['id_user'])
-        ->delete($data);
-}
+    {
+        $this->db->table('tbl_user')
+            ->where('id_user', $data['id_user'])
+            ->update($data);
+    }
+
+    public function deleteData($data)
+    {
+        $this->db->table('tbl_user')
+            ->where('id_user', $data['id_user'])
+            ->delete($data); // Catatan: Di CI4, delete() untuk Query Builder tidak perlu melempar parameter $data lagi, cukup ->delete() saja jika where sudah ditentukan
+    }
 }
