@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 27, 2026 at 07:59 AM
--- Server version: 8.0.30
--- PHP Version: 8.5.4
+-- Waktu pembuatan: 30 Sep 2026 pada 07.05
+-- Versi server: 8.0.30
+-- Versi PHP: 8.5.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db-gis-faskes1`
+-- Basis data: `db-gis-faskes1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_faskes`
+-- Struktur dari tabel `tbl_faskes`
 --
 
 CREATE TABLE `tbl_faskes` (
@@ -42,17 +42,40 @@ CREATE TABLE `tbl_faskes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_faskes`
+-- Dumping data untuk tabel `tbl_faskes`
 --
 
 INSERT INTO `tbl_faskes` (`id_faskes`, `nama_faskes`, `akreditasi`, `jenis`, `koordinat`, `foto`, `alamat`, `id_provinsi`, `id_kabupaten`, `id_kecamatan`, `status`) VALUES
 (1, 'RSU Muhammadiyah Siti Aminah Bumiayu', 'paripurna', 'rumah sakit', '-7.264980429920643, 109.01224768075073', 'RSUDBumiayu.jpg', ' Jl. Pangeran Diponegoro, Karangdempul Barat.', NULL, NULL, NULL, 'swasta'),
-(2, 'RSUD Bumiayu', 'paripurna', 'rumah sakit', '-7.253060443573255, 109.01035940566392', 'RSUMuhammadiyah.jpg', 'Jl. K.H. Ahmad Dahlan No.KM. 1, Krajan Dua, Kalierang.', NULL, NULL, NULL, 'swasta');
+(2, 'RSUD Bumiayu', 'paripurna', 'rumah sakit', '-7.253060443573255, 109.01035940566392', 'RSUMuhammadiyah.jpg', 'Jl. K.H. Ahmad Dahlan No.KM. 1, Krajan Dua, Kalierang.', NULL, NULL, NULL, 'swasta'),
+(3, 'Klinik Pratama Afiat Medika', 'paripurna', 'klinik', '-7.30094229556966,109.03765748216794', '1783143584_eaf43ef115720903e5b5.png', 'Jl. Paguyangan No.1, RT.06/RW.04, Sawah,Ladang, Paguyangan, Kec. Paguyangan, Kabupaten Brebes, Jawa Tengah 52276', 33, 3329, 3329040, 'Swasta'),
+(4, 'Klinik Utama Ahmad Kamali', 'paripurna', 'klinik', '-7.252701372972631,109.00792272807385', '1783143955_aafe689973ea723ed8a8.png', 'Jl. KH. Arobi Ali Krajan II No.3, Pongkuron, Kalierang, Kec. Bumiayu, Kabupaten Brebes, Jawa Tengah 52273', 33, 3329, 3329030, 'Swasta'),
+(5, 'KLINIK RAWAT INAP SITI AMALIYAH', 'paripurna', 'klinik', '-7.254934031775179,109.0072359711158', '1783144111_5f2901e1fba13e7f28dd.png', ' Jl. Yudhakerti, Dukuh Bandung, Bumiayu, Kec. Bumiayu, Kabupaten Brebes, Jawa Tengah 52273', 33, 3329, 3329030, 'Swasta'),
+(6, ' Puskesmas Negaradaha', 'paripurna', 'puskesmas', '-7.2705055683768185,109.0275562925918', '1783144258_5559484b649870544795.png', 'Dekat, Krajan, Negaradaha, Kec. Bumiayu, Kabupaten Brebes, Jawa Tengah 52273', 33, 3329, 3329030, 'Swasta'),
+(7, 'Klinik Altaz - Sunat Hipnotis Bumiayu Paguyangan', 'paripurna', 'klinik', '-7.30109837623207,109.04227785076665', '1783145269_1112e37d233b6b639a9d.png', 'Paguyangan, Kec. Paguyangan, Kabupaten Brebes, Jawa Tengah 52276', 33, 3329, 3329040, 'Swasta'),
+(8, 'Klinik Haza Medika', 'paripurna', 'klinik', '-7.264091589798917,109.0108944954668', '1783145661_3829c1df1ec3fd144b5c.png', 'Jl. Pangeran Diponegoro No.709, Karangdempul Timur, Jatisawit, Kec. Bumiayu, Kabupaten Brebes, Jawa Tengah 52273', 33, 3329, 3329030, 'Swasta'),
+(9, 'Klinik Asyifa Medika', 'paripurna', 'klinik', '-7.276805927517852,109.02241642608097', '1783146343_a6b08f293bd7b56c9c1e.png', 'P2G9+Q8R, Damsari, Pagojengan, Kec. Paguyangan, Kabupaten Brebes, Jawa Tengah 52276', 33, 3329, 3329030, 'Negeri'),
+(10, 'Klinik Quinmedika', 'paripurna', 'klinik', '-7.25860464947851,109.00826610655292', '1783146583_62c466208da895e3afed.png', 'Jl. Raya Jatisawit No.37, RT.02/RW.03, Krajan, Jatisawit, Kec. Bumiayu, Kabupaten Brebes, Jawa Tengah 52273', 33, 3329, 3329030, 'Swasta');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_kabupaten`
+-- Struktur dari tabel `tbl_feedback`
+--
+
+CREATE TABLE `tbl_feedback` (
+  `id` int UNSIGNED NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(120) DEFAULT NULL,
+  `rating` tinyint DEFAULT NULL,
+  `pesan` text NOT NULL,
+  `created_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_kabupaten`
 --
 
 CREATE TABLE `tbl_kabupaten` (
@@ -62,7 +85,7 @@ CREATE TABLE `tbl_kabupaten` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `tbl_kabupaten`
+-- Dumping data untuk tabel `tbl_kabupaten`
 --
 
 INSERT INTO `tbl_kabupaten` (`id_kabupaten`, `id_provinsi`, `nama_kabupaten`) VALUES
@@ -584,7 +607,7 @@ INSERT INTO `tbl_kabupaten` (`id_kabupaten`, `id_provinsi`, `nama_kabupaten`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_kategori`
+-- Struktur dari tabel `tbl_kategori`
 --
 
 CREATE TABLE `tbl_kategori` (
@@ -594,7 +617,7 @@ CREATE TABLE `tbl_kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_kategori`
+-- Dumping data untuk tabel `tbl_kategori`
 --
 
 INSERT INTO `tbl_kategori` (`id_kategori`, `kategori`, `marker`) VALUES
@@ -605,7 +628,7 @@ INSERT INTO `tbl_kategori` (`id_kategori`, `kategori`, `marker`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_kecamatan`
+-- Struktur dari tabel `tbl_kecamatan`
 --
 
 CREATE TABLE `tbl_kecamatan` (
@@ -615,7 +638,7 @@ CREATE TABLE `tbl_kecamatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `tbl_kecamatan`
+-- Dumping data untuk tabel `tbl_kecamatan`
 --
 
 INSERT INTO `tbl_kecamatan` (`id_kecamatan`, `id_kabupaten`, `nama_kecamatan`) VALUES
@@ -7669,7 +7692,7 @@ INSERT INTO `tbl_kecamatan` (`id_kecamatan`, `id_kabupaten`, `nama_kecamatan`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_provinsi`
+-- Struktur dari tabel `tbl_provinsi`
 --
 
 CREATE TABLE `tbl_provinsi` (
@@ -7678,7 +7701,7 @@ CREATE TABLE `tbl_provinsi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `tbl_provinsi`
+-- Dumping data untuk tabel `tbl_provinsi`
 --
 
 INSERT INTO `tbl_provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
@@ -7720,7 +7743,7 @@ INSERT INTO `tbl_provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_setting`
+-- Struktur dari tabel `tbl_setting`
 --
 
 CREATE TABLE `tbl_setting` (
@@ -7731,7 +7754,7 @@ CREATE TABLE `tbl_setting` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_setting`
+-- Dumping data untuk tabel `tbl_setting`
 --
 
 INSERT INTO `tbl_setting` (`id`, `nama_web`, `coordinat_wilayah`, `zoom_view`) VALUES
@@ -7740,29 +7763,29 @@ INSERT INTO `tbl_setting` (`id`, `nama_web`, `coordinat_wilayah`, `zoom_view`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_user`
+-- Struktur dari tabel `tbl_user`
 --
 
 CREATE TABLE `tbl_user` (
   `id_user` int NOT NULL,
   `nama_user` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `foto` text COLLATE utf8mb4_general_ci
+  `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foto` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `role` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_user`
+-- Dumping data untuk tabel `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id_user`, `nama_user`, `email`, `password`, `foto`) VALUES
-(1, 'fsakes', 'admin@gmail.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'rs.jpg'),
-(15, 'sandol', 'sandol123@gmail.com', '562372b549ea10f804ccd5f4c59bf98c', NULL);
+INSERT INTO `tbl_user` (`id_user`, `nama_user`, `email`, `password`, `foto`, `role`) VALUES
+(1, 'admin', 'admin@gmail.com', 'f865b53623b121fd34ee5426c792e5c33af8c227', '1783333526_a788eefea32652fa7563.jpg', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_wilayah`
+-- Struktur dari tabel `tbl_wilayah`
 --
 
 CREATE TABLE `tbl_wilayah` (
@@ -7773,103 +7796,115 @@ CREATE TABLE `tbl_wilayah` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_wilayah`
+-- Dumping data untuk tabel `tbl_wilayah`
 --
 
 INSERT INTO `tbl_wilayah` (`id_wilayah`, `nama_wilayah`, `geojson`, `warna`) VALUES
 (4, 'kecamatan tonjong', '{\"type\":\"FeatureCollection\", \"features\": [\r\n{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[108.9909,-7.2357],[108.9879,-7.2404],[108.9911,-7.2411],[108.9961,-7.2383],[109.0002,-7.2381],[109.002,-7.2335],[109.0065,-7.2346],[109.0075,-7.2321],[109.0132,-7.2284],[109.0151,-7.2216],[109.0206,-7.2196],[109.0163,-7.2176],[109.0198,-7.2103],[109.0231,-7.2123],[109.0296,-7.2122],[109.0333,-7.2074],[109.033,-7.203],[109.0371,-7.197],[109.0477,-7.1907],[109.0573,-7.1897],[109.0557,-7.1849],[109.0644,-7.1721],[109.0817,-7.1547],[109.0843,-7.1471],[109.0828,-7.1366],[109.0737,-7.1261],[109.0741,-7.1142],[109.0692,-7.1269],[109.0618,-7.1281],[109.0596,-7.1302],[109.0573,-7.136],[109.0604,-7.1423],[109.0571,-7.1499],[109.0466,-7.1501],[109.0423,-7.1436],[109.0365,-7.1404],[109.0256,-7.1431],[109.009,-7.1395],[109,-7.1417],[108.99,-7.1321],[108.9837,-7.1321],[108.9786,-7.1351],[108.9748,-7.1397],[108.9723,-7.1481],[108.9654,-7.1507],[108.9651,-7.1598],[108.9708,-7.1642],[108.9737,-7.1844],[108.974,-7.1903],[108.9699,-7.1927],[108.975,-7.1993],[108.9803,-7.2025],[108.9834,-7.2151],[108.989,-7.221],[108.9909,-7.2357]]]},\"properties\":{\"GID_3\":\"IDN.10.6.16_1\",\"GID_0\":\"IDN\",\"COUNTRY\":\"Indonesia\",\"GID_1\":\"IDN.10_1\",\"NAME_1\":\"JawaTengah\",\"NL_NAME_1\":\"NA\",\"GID_2\":\"IDN.10.6_1\",\"NAME_2\":\"Brebes\",\"NL_NAME_2\":\"NA\",\"NAME_3\":\"Tonjong\",\"VARNAME_3\":\"NA\",\"NL_NAME_3\":\"NA\",\"TYPE_3\":\"Kecamatan\",\"ENGTYPE_3\":\"Sub-district\",\"CC_3\":\"3329060\",\"HASC_3\":\"NA\"}}\r\n]}', '#2A0D07'),
 (5, 'kecamatan sirampog', '{\"type\":\"FeatureCollection\", \"features\": [\r\n{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[109.1589,-7.2563],[109.1611,-7.2607],[109.1624,-7.2621],[109.1653,-7.2567],[109.1653,-7.2487],[109.1747,-7.2503],[109.1755,-7.2398],[109.1684,-7.2397],[109.1575,-7.2442],[109.1566,-7.2464],[109.1496,-7.2462],[109.1389,-7.2387],[109.1361,-7.2329],[109.1321,-7.2315],[109.1282,-7.2269],[109.1204,-7.2224],[109.1166,-7.2155],[109.1133,-7.2131],[109.1114,-7.2129],[109.1103,-7.2151],[109.1077,-7.2126],[109.0941,-7.215],[109.0803,-7.215],[109.0786,-7.2123],[109.0775,-7.2009],[109.0679,-7.1966],[109.0652,-7.1969],[109.0594,-7.1935],[109.0573,-7.1897],[109.0485,-7.1904],[109.0379,-7.1965],[109.0334,-7.202],[109.0333,-7.2074],[109.0302,-7.2118],[109.0231,-7.2123],[109.02,-7.2102],[109.0163,-7.2176],[109.0261,-7.2227],[109.0309,-7.227],[109.0403,-7.2264],[109.048,-7.2224],[109.0494,-7.2257],[109.0517,-7.2265],[109.0483,-7.2271],[109.0472,-7.2364],[109.0562,-7.2421],[109.0688,-7.2398],[109.0743,-7.2466],[109.0861,-7.2487],[109.0883,-7.253],[109.0892,-7.2613],[109.0983,-7.2682],[109.1015,-7.2677],[109.1065,-7.2699],[109.1158,-7.2657],[109.1221,-7.2654],[109.1244,-7.2628],[109.1236,-7.2602],[109.1273,-7.2575],[109.132,-7.2551],[109.141,-7.2557],[109.1506,-7.2506],[109.1589,-7.2563]]]},\"properties\":{\"GID_3\":\"IDN.10.6.13_1\",\"GID_0\":\"IDN\",\"COUNTRY\":\"Indonesia\",\"GID_1\":\"IDN.10_1\",\"NAME_1\":\"JawaTengah\",\"NL_NAME_1\":\"NA\",\"GID_2\":\"IDN.10.6_1\",\"NAME_2\":\"Brebes\",\"NL_NAME_2\":\"NA\",\"NAME_3\":\"Sirampog\",\"VARNAME_3\":\"NA\",\"NL_NAME_3\":\"NA\",\"TYPE_3\":\"Kecamatan\",\"ENGTYPE_3\":\"Sub-district\",\"CC_3\":\"3329050\",\"HASC_3\":\"NA\"}}\r\n]}', '#EB0BFA'),
 (7, 'kecamatan bumiayu', '{\"type\":\"FeatureCollection\", \"features\": [\r\n{\"type\":\"Feature\",\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[108.9669,-7.2723],[108.9697,-7.2737],[108.9693,-7.275],[108.9709,-7.2752],[108.9697,-7.2765],[108.9735,-7.2792],[108.9715,-7.2804],[108.9739,-7.2805],[108.9732,-7.2835],[108.9752,-7.2838],[108.9745,-7.2857],[108.9761,-7.2861],[108.9778,-7.2903],[108.9769,-7.2925],[108.9788,-7.2924],[108.9758,-7.2969],[108.977,-7.2982],[108.9788,-7.2975],[108.9778,-7.3],[108.9803,-7.3004],[108.9779,-7.3021],[108.9776,-7.3042],[108.9916,-7.3082],[108.9987,-7.3067],[109.0012,-7.3096],[109.0027,-7.3062],[109.0074,-7.3038],[109.0025,-7.2943],[109.0052,-7.2878],[109.0051,-7.2826],[109.0029,-7.2785],[109.0134,-7.2684],[109.0188,-7.2698],[109.0282,-7.2761],[109.0355,-7.2756],[109.0378,-7.2712],[109.036,-7.269],[109.0393,-7.2655],[109.0416,-7.2533],[109.0387,-7.2508],[109.0347,-7.2503],[109.035,-7.2456],[109.0371,-7.2442],[109.038,-7.2397],[109.0472,-7.239],[109.0469,-7.2306],[109.0435,-7.2254],[109.0394,-7.2286],[109.0332,-7.2278],[109.0214,-7.22],[109.0181,-7.2195],[109.0147,-7.222],[109.0136,-7.2279],[109.0075,-7.2321],[109.0065,-7.2346],[109.0032,-7.233],[109,-7.2383],[108.9883,-7.2408],[108.9882,-7.2385],[108.9909,-7.2357],[108.9891,-7.2212],[108.9872,-7.2177],[108.9834,-7.2151],[108.9803,-7.2025],[108.975,-7.1993],[108.9712,-7.1935],[108.9672,-7.1924],[108.9669,-7.19],[108.9623,-7.1891],[108.9597,-7.1902],[108.9577,-7.1876],[108.9547,-7.1889],[108.9497,-7.1879],[108.9425,-7.1916],[108.9372,-7.1999],[108.9289,-7.2067],[108.9326,-7.2103],[108.9255,-7.2142],[108.9267,-7.2203],[108.933,-7.2212],[108.9342,-7.2252],[108.94,-7.2328],[108.9408,-7.2377],[108.9483,-7.2413],[108.9525,-7.2381],[108.9579,-7.2416],[108.9594,-7.2466],[108.9534,-7.2454],[108.953,-7.2469],[108.9577,-7.2496],[108.9567,-7.2522],[108.9608,-7.2577],[108.9595,-7.2629],[108.962,-7.2637],[108.9633,-7.2694],[108.9672,-7.2696],[108.9669,-7.2723]]],[[[108.97213333333336,-7.191233333333317],[108.9714,-7.1916],[108.9702,-7.1925],[108.97213333333336,-7.191233333333317]]],[[[108.97213333333336,-7.191233333333317],[108.9724,-7.1911],[108.9731,-7.1906],[108.97213333333336,-7.191233333333317]]]]},\"properties\":{\"NAME_3\":\"Bumiayu\"}}\r\n]}', '#0D26F2'),
-(8, 'kecamatan paguyangan', '{\"type\":\"FeatureCollection\", \"features\": [\r\n{\"type\":\"Feature\",\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[108.9877,-7.3335],[108.9983,-7.3342],[109.0176,-7.335],[109.0239,-7.3322],[109.0259,-7.3266],[109.0286,-7.3264],[109.0365,-7.3428],[109.0307,-7.3495],[109.0362,-7.3515],[109.0474,-7.3388],[109.0568,-7.3402],[109.0645,-7.3386],[109.0688,-7.3322],[109.0757,-7.3142],[109.0839,-7.3047],[109.1046,-7.3025],[109.1077,-7.2963],[109.1139,-7.2948],[109.1143,-7.2923],[109.106,-7.2897],[109.1057,-7.2873],[109.1171,-7.2852],[109.1272,-7.281],[109.1258,-7.2786],[109.1177,-7.2786],[109.1164,-7.2774],[109.1171,-7.2751],[109.1249,-7.2729],[109.1304,-7.2765],[109.1353,-7.2679],[109.1428,-7.2683],[109.1475,-7.2665],[109.1572,-7.2675],[109.1644,-7.2714],[109.167,-7.2678],[109.1589,-7.2563],[109.1509,-7.2505],[109.141,-7.2557],[109.132,-7.2551],[109.1273,-7.2575],[109.1236,-7.2602],[109.1244,-7.2628],[109.1221,-7.2654],[109.1158,-7.2657],[109.1065,-7.2699],[109.1015,-7.2677],[109.0983,-7.2682],[109.0892,-7.2613],[109.0883,-7.253],[109.0863,-7.2488],[109.0743,-7.2466],[109.0688,-7.2398],[109.0562,-7.2421],[109.0472,-7.2364],[109.0472,-7.239],[109.0456,-7.2396],[109.038,-7.2397],[109.0346,-7.2501],[109.0395,-7.2512],[109.0415,-7.2543],[109.0396,-7.2586],[109.0393,-7.2655],[109.036,-7.269],[109.0378,-7.2712],[109.0357,-7.2753],[109.0282,-7.2761],[109.0188,-7.2698],[109.0134,-7.2684],[109.007,-7.2734],[109.0028,-7.2788],[109.0051,-7.2826],[109.0052,-7.2878],[109.0024,-7.2936],[109.0072,-7.3043],[109.0027,-7.3062],[109.0012,-7.3096],[108.9987,-7.3067],[108.9916,-7.3082],[108.9851,-7.3062],[108.983,-7.3215],[108.9749,-7.331],[108.9756,-7.3349],[108.9771,-7.3334],[108.9783,-7.335],[108.9838,-7.333],[108.9841,-7.3348],[108.9877,-7.3335]]],[[[109.0469,-7.2306],[109.0465,-7.2352],[109.0472,-7.2364],[109.0483,-7.2271],[109.0517,-7.2265],[109.0494,-7.2257],[109.048,-7.2224],[109.0403,-7.2264],[109.0314,-7.227],[109.0393,-7.2286],[109.0435,-7.2254],[109.0469,-7.2306]]]]},\"properties\":{\"GID_3\":\"IDN.10.6.11_1\",\"GID_0\":\"IDN\",\"COUNTRY\":\"Indonesia\",\"GID_1\":\"IDN.10_1\",\"NAME_1\":\"JawaTengah\",\"NL_NAME_1\":\"NA\",\"GID_2\":\"IDN.10.6_1\",\"NAME_2\":\"Brebes\",\"NL_NAME_2\":\"NA\",\"NAME_3\":\"Paguyangan\",\"VARNAME_3\":\"NA\",\"NL_NAME_3\":\"NA\",\"TYPE_3\":\"Kecamatan\",\"ENGTYPE_3\":\"Sub-district\",\"CC_3\":\"3329040\",\"HASC_3\":\"NA\"}}\r\n]}', '#690805'),
+(8, 'kecamatan paguyangan', '{\"type\":\"FeatureCollection\", \"features\": [\r\n{\"type\":\"Feature\",\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[108.9877,-7.3335],[108.9983,-7.3342],[109.0176,-7.335],[109.0239,-7.3322],[109.0259,-7.3266],[109.0286,-7.3264],[109.0365,-7.3428],[109.0307,-7.3495],[109.0362,-7.3515],[109.0474,-7.3388],[109.0568,-7.3402],[109.0645,-7.3386],[109.0688,-7.3322],[109.0757,-7.3142],[109.0839,-7.3047],[109.1046,-7.3025],[109.1077,-7.2963],[109.1139,-7.2948],[109.1143,-7.2923],[109.106,-7.2897],[109.1057,-7.2873],[109.1171,-7.2852],[109.1272,-7.281],[109.1258,-7.2786],[109.1177,-7.2786],[109.1164,-7.2774],[109.1171,-7.2751],[109.1249,-7.2729],[109.1304,-7.2765],[109.1353,-7.2679],[109.1428,-7.2683],[109.1475,-7.2665],[109.1572,-7.2675],[109.1644,-7.2714],[109.167,-7.2678],[109.1589,-7.2563],[109.1509,-7.2505],[109.141,-7.2557],[109.132,-7.2551],[109.1273,-7.2575],[109.1236,-7.2602],[109.1244,-7.2628],[109.1221,-7.2654],[109.1158,-7.2657],[109.1065,-7.2699],[109.1015,-7.2677],[109.0983,-7.2682],[109.0892,-7.2613],[109.0883,-7.253],[109.0863,-7.2488],[109.0743,-7.2466],[109.0688,-7.2398],[109.0562,-7.2421],[109.0472,-7.2364],[109.0472,-7.239],[109.0456,-7.2396],[109.038,-7.2397],[109.0346,-7.2501],[109.0395,-7.2512],[109.0415,-7.2543],[109.0396,-7.2586],[109.0393,-7.2655],[109.036,-7.269],[109.0378,-7.2712],[109.0357,-7.2753],[109.0282,-7.2761],[109.0188,-7.2698],[109.0134,-7.2684],[109.007,-7.2734],[109.0028,-7.2788],[109.0051,-7.2826],[109.0052,-7.2878],[109.0024,-7.2936],[109.0072,-7.3043],[109.0027,-7.3062],[109.0012,-7.3096],[108.9987,-7.3067],[108.9916,-7.3082],[108.9851,-7.3062],[108.983,-7.3215],[108.9749,-7.331],[108.9756,-7.3349],[108.9771,-7.3334],[108.9783,-7.335],[108.9838,-7.333],[108.9841,-7.3348],[108.9877,-7.3335]]],[[[109.0469,-7.2306],[109.0465,-7.2352],[109.0472,-7.2364],[109.0483,-7.2271],[109.0517,-7.2265],[109.0494,-7.2257],[109.048,-7.2224],[109.0403,-7.2264],[109.0314,-7.227],[109.0393,-7.2286],[109.0435,-7.2254],[109.0469,-7.2306]]]]},\"properties\":{\"GID_3\":\"IDN.10.6.11_1\",\"GID_0\":\"IDN\",\"COUNTRY\":\"Indonesia\",\"GID_1\":\"IDN.10_1\",\"NAME_1\":\"JawaTengah\",\"NL_NAME_1\":\"NA\",\"GID_2\":\"IDN.10.6_1\",\"NAME_2\":\"Brebes\",\"NL_NAME_2\":\"NA\",\"NAME_3\":\"Paguyangan\",\"VARNAME_3\":\"NA\",\"NL_NAME_3\":\"NA\",\"TYPE_3\":\"Kecamatan\",\"ENGTYPE_3\":\"Sub-district\",\"CC_3\":\"3329040\",\"HASC_3\":\"NA\"}}\r\n]}', '#FA140D'),
 (10, 'kecamatan bantarkawung ', '{\"type\":\"FeatureCollection\", \"features\": [\r\n{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[108.9696,-7.3336],[108.9727,-7.3327],[108.9747,-7.3338],[108.9763,-7.3281],[108.983,-7.3215],[108.9851,-7.3062],[108.9773,-7.3039],[108.9803,-7.3004],[108.9778,-7.3],[108.9788,-7.2975],[108.9758,-7.297],[108.9788,-7.2929],[108.9769,-7.2925],[108.9778,-7.2903],[108.9761,-7.2861],[108.9745,-7.2857],[108.9752,-7.2838],[108.9732,-7.2835],[108.9739,-7.2805],[108.9715,-7.2804],[108.9735,-7.2792],[108.9697,-7.2765],[108.9708,-7.2746],[108.9695,-7.2751],[108.9696,-7.2735],[108.9669,-7.2723],[108.9675,-7.2698],[108.9636,-7.2696],[108.962,-7.2637],[108.9595,-7.2629],[108.9607,-7.2567],[108.9581,-7.2554],[108.9588,-7.2533],[108.9567,-7.2522],[108.9574,-7.2492],[108.9529,-7.2465],[108.9534,-7.2454],[108.9594,-7.2466],[108.9579,-7.2416],[108.9525,-7.2381],[108.9483,-7.2413],[108.9403,-7.2373],[108.94,-7.2328],[108.9342,-7.2252],[108.9334,-7.2216],[108.9268,-7.2206],[108.9254,-7.2145],[108.9326,-7.2103],[108.9289,-7.2079],[108.9291,-7.2064],[108.9372,-7.1999],[108.9425,-7.1916],[108.9491,-7.188],[108.9547,-7.1889],[108.958,-7.1877],[108.9597,-7.1902],[108.9623,-7.1891],[108.9669,-7.19],[108.9683,-7.1926],[108.974,-7.1903],[108.972,-7.1686],[108.9704,-7.1636],[108.9654,-7.1607],[108.9654,-7.1507],[108.9626,-7.1478],[108.9607,-7.1412],[108.9574,-7.138],[108.9537,-7.1293],[108.9516,-7.1273],[108.9442,-7.1299],[108.9432,-7.1289],[108.9425,-7.1226],[108.9371,-7.1218],[108.9344,-7.1177],[108.9337,-7.1145],[108.9376,-7.1096],[108.9319,-7.1029],[108.9332,-7.0995],[108.9257,-7.0984],[108.9246,-7.0988],[108.9245,-7.1053],[108.9227,-7.1093],[108.9171,-7.1086],[108.9064,-7.1132],[108.9066,-7.1144],[108.909,-7.1144],[108.9075,-7.1172],[108.9096,-7.1207],[108.9084,-7.13],[108.9114,-7.1322],[108.9124,-7.1358],[108.9089,-7.1415],[108.9009,-7.1395],[108.8936,-7.1441],[108.8836,-7.1437],[108.8774,-7.1503],[108.8667,-7.1476],[108.8599,-7.1426],[108.8611,-7.1472],[108.8602,-7.1526],[108.8653,-7.1615],[108.8757,-7.1653],[108.8828,-7.158],[108.8898,-7.1653],[108.8953,-7.1744],[108.892,-7.1793],[108.8956,-7.1863],[108.8883,-7.1859],[108.8842,-7.183],[108.8838,-7.1889],[108.8797,-7.1943],[108.8693,-7.199],[108.8673,-7.2015],[108.8501,-7.2064],[108.8401,-7.206],[108.8336,-7.203],[108.8262,-7.2021],[108.8218,-7.2045],[108.8106,-7.2038],[108.8142,-7.2115],[108.8168,-7.2112],[108.8196,-7.2152],[108.8213,-7.2205],[108.8212,-7.2265],[108.8186,-7.2288],[108.8188,-7.2316],[108.8234,-7.2324],[108.825,-7.235],[108.8313,-7.2321],[108.8397,-7.2368],[108.8507,-7.2381],[108.855,-7.2412],[108.8573,-7.2405],[108.8646,-7.2431],[108.863,-7.2464],[108.8571,-7.247],[108.8571,-7.2504],[108.8529,-7.2523],[108.8526,-7.2538],[108.8542,-7.2545],[108.8563,-7.2608],[108.862,-7.2638],[108.8624,-7.2684],[108.8659,-7.272],[108.8826,-7.2725],[108.8847,-7.2753],[108.8932,-7.2759],[108.892,-7.2823],[108.894,-7.2841],[108.9093,-7.2882],[108.9128,-7.291],[108.914,-7.3029],[108.9185,-7.3047],[108.9214,-7.3122],[108.9285,-7.3179],[108.9338,-7.319],[108.9391,-7.3156],[108.9435,-7.3177],[108.9502,-7.3154],[108.9516,-7.3187],[108.9492,-7.3244],[108.9524,-7.3262],[108.9523,-7.3289],[108.9501,-7.3295],[108.9515,-7.3311],[108.9573,-7.331],[108.9622,-7.3342],[108.9665,-7.3321],[108.9696,-7.3336]]]},\"properties\":{\"GID_3\":\"IDN.10.6.2_1\",\"GID_0\":\"IDN\",\"COUNTRY\":\"Indonesia\",\"GID_1\":\"IDN.10_1\",\"NAME_1\":\"JawaTengah\",\"NL_NAME_1\":\"NA\",\"GID_2\":\"IDN.10.6_1\",\"NAME_2\":\"Brebes\",\"NL_NAME_2\":\"NA\",\"NAME_3\":\"Bantarkawung\",\"VARNAME_3\":\"NA\",\"NL_NAME_3\":\"NA\",\"TYPE_3\":\"Kecamatan\",\"ENGTYPE_3\":\"Sub-district\",\"CC_3\":\"3329020\",\"HASC_3\":\"NA\"}}\r\n]}', '#F0D814');
 
 --
--- Indexes for dumped tables
+-- Indeks untuk tabel yang dibuang
 --
 
 --
--- Indexes for table `tbl_faskes`
+-- Indeks untuk tabel `tbl_faskes`
 --
 ALTER TABLE `tbl_faskes`
   ADD PRIMARY KEY (`id_faskes`);
 
 --
--- Indexes for table `tbl_kabupaten`
+-- Indeks untuk tabel `tbl_feedback`
+--
+ALTER TABLE `tbl_feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tbl_kabupaten`
 --
 ALTER TABLE `tbl_kabupaten`
   ADD PRIMARY KEY (`id_kabupaten`) USING BTREE,
   ADD KEY `regencies_province_id_index` (`id_provinsi`) USING BTREE;
 
 --
--- Indexes for table `tbl_kategori`
+-- Indeks untuk tabel `tbl_kategori`
 --
 ALTER TABLE `tbl_kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
--- Indexes for table `tbl_kecamatan`
+-- Indeks untuk tabel `tbl_kecamatan`
 --
 ALTER TABLE `tbl_kecamatan`
   ADD PRIMARY KEY (`id_kecamatan`) USING BTREE,
   ADD KEY `districts_regency_id_index` (`id_kabupaten`) USING BTREE;
 
 --
--- Indexes for table `tbl_provinsi`
+-- Indeks untuk tabel `tbl_provinsi`
 --
 ALTER TABLE `tbl_provinsi`
   ADD PRIMARY KEY (`id_provinsi`) USING BTREE;
 
 --
--- Indexes for table `tbl_setting`
+-- Indeks untuk tabel `tbl_setting`
 --
 ALTER TABLE `tbl_setting`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_user`
+-- Indeks untuk tabel `tbl_user`
 --
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- Indexes for table `tbl_wilayah`
+-- Indeks untuk tabel `tbl_wilayah`
 --
 ALTER TABLE `tbl_wilayah`
   ADD PRIMARY KEY (`id_wilayah`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tbl_faskes`
+-- AUTO_INCREMENT untuk tabel `tbl_faskes`
 --
 ALTER TABLE `tbl_faskes`
-  MODIFY `id_faskes` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_faskes` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `tbl_kategori`
+-- AUTO_INCREMENT untuk tabel `tbl_feedback`
+--
+ALTER TABLE `tbl_feedback`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_kategori`
 --
 ALTER TABLE `tbl_kategori`
   MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tbl_setting`
+-- AUTO_INCREMENT untuk tabel `tbl_setting`
 --
 ALTER TABLE `tbl_setting`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tbl_user`
+-- AUTO_INCREMENT untuk tabel `tbl_user`
 --
 ALTER TABLE `tbl_user`
   MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `tbl_wilayah`
+-- AUTO_INCREMENT untuk tabel `tbl_wilayah`
 --
 ALTER TABLE `tbl_wilayah`
-  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_wilayah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

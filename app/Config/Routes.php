@@ -23,6 +23,9 @@ $routes->get('login',       'AuthController::index');
 $routes->post('login',      'AuthController::login');
 $routes->get('logout',      'AuthController::logout');
 
+// Feedback (publik, tanpa login)
+$routes->post('feedback/simpan', 'Feedback::simpan');
+
 // ─── PANEL ADMIN (dilindungi AuthFilter) ─────────────────────────────────────
 $routes->group('', ['filter' => 'auth'], function () use ($routes) {
 

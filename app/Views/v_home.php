@@ -131,11 +131,62 @@
         }
     <?php } ?>
 
+    // =========================================================================
+    // DETEKSI KECAMATAN MARKER LEWAT POSISI (point-in-polygon)
+    // Cadangan kalau kolom id_kecamatan di tbl_faskes kosong / tidak cocok,
+    // sehingga marker tetap ikut filter kecamatan sesuai lokasinya di peta.
+    // =========================================================================
+    function titikDalamRing(lat, lng, ring) {
+        var dalam = false;
+        for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            var yi = ring[i].lat, xi = ring[i].lng;
+            var yj = ring[j].lat, xj = ring[j].lng;
+            var potong = ((yi > lat) !== (yj > lat)) &&
+                (lng < (xj - xi) * (lat - yi) / (yj - yi) + xi);
+            if (potong) dalam = !dalam;
+        }
+        return dalam;
+    }
+
+    function titikDalamPolygon(lat, lng, latlngs) {
+        // latlngs: [ring, ring, ...] (ring pertama = luar, sisanya lubang)
+        // atau [[ring,...], [ring,...]] untuk MultiPolygon
+        if (!latlngs.length) return false;
+        if (Array.isArray(latlngs[0]) && latlngs[0].length && Array.isArray(latlngs[0][0])) {
+            return latlngs.some(function(poly) { return titikDalamPolygon(lat, lng, poly); });
+        }
+        if (!titikDalamRing(lat, lng, latlngs[0])) return false;
+        for (var k = 1; k < latlngs.length; k++) {
+            if (titikDalamRing(lat, lng, latlngs[k])) return false;
+        }
+        return true;
+    }
+
+    function cariWilayahDariTitik(latlng) {
+        for (var a = 0; a < window.geojsonLayers.length; a++) {
+            var group = window.geojsonLayers[a];
+            var ketemu = false;
+            group.eachLayer(function(l) {
+                if (ketemu || !l.getLatLngs) return;
+                var ll = l.getLatLngs();
+                if (l.getBounds && !l.getBounds().contains(latlng)) return;
+                if (titikDalamPolygon(latlng.lat, latlng.lng, ll)) ketemu = true;
+            });
+            if (ketemu) return normalisasiNama(group.nama_wilayah);
+        }
+        return '';
+    }
+
+    window.faskesMarkers.forEach(function(m) {
+        m.wilayah_geo = cariWilayahDariTitik(m.getLatLng());
+    });
+
     console.log('DEBUG faskesMarkers:', window.faskesMarkers.map(function(m) {
         return {
             nama_faskes: m.nama_faskes,
             id_kecamatan: m.id_kecamatan,
             nama_wilayah: m.nama_wilayah,
+            wilayah_geo: m.wilayah_geo,
             jenis_faskes: m.jenis_faskes
         };
     }));
@@ -182,7 +233,8 @@
                 rawPilihanKec === 'all' ||
                 (idKecamatanDipilih !== '' && idMarker !== '' && idMarker === idKecamatanDipilih) ||
                 (namaMarker !== '' && namaMarker === kecamatanDipilih) ||
-                (namaMarker !== '' && kecamatanDipilih !== '' && namaMarker.includes(kecamatanDipilih));
+                (namaMarker !== '' && kecamatanDipilih !== '' && namaMarker.includes(kecamatanDipilih)) ||
+                (kecamatanDipilih !== '' && marker.wilayah_geo === kecamatanDipilih);
 
             let cocokJenis = (jenisDipilih === 'all') || (marker.jenis_faskes === jenisDipilih);
 

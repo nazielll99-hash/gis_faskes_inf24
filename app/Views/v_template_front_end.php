@@ -269,6 +269,7 @@
             </li>
 
             <!-- Dropdown 1: Tentang Kami -->
+           <!-- Dropdown 1: Tentang Kami -->
             <li class="nav-item dropdown">
               <a id="dropdownTentang" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
                 <i class="fas fa-info-circle mr-1"></i> Tentang Kami
@@ -289,7 +290,7 @@
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a href="#" class="dropdown-item py-2">
+                  <a href="#" class="dropdown-item py-2" id="btnBukaFeedback" data-toggle="modal" data-target="#modalFeedback">
                     <span class="d-block font-weight-bold" style="color: var(--teal-700);"><i class="fas fa-comments mr-1"></i> Feedback</span>
                   </a>
                 </li>
@@ -404,6 +405,64 @@
   </div>
   <!-- ./wrapper -->
 
+  <!-- Modal Feedback -->
+  <div class="modal fade" id="modalFeedback" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" style="border:none; border-radius:14px;">
+        <form id="formFeedback" novalidate>
+          <?= csrf_field() ?>
+          <div class="modal-header" style="border-bottom:1px solid var(--mint-100);">
+            <h5 class="modal-title" style="font-family:'Sora',sans-serif; color:var(--teal-700);">
+              <i class="fas fa-comments mr-2"></i>Kirim Feedback
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Tutup"><span>&times;</span></button>
+          </div>
+
+          <div class="modal-body">
+            <div id="feedbackAlert"></div>
+
+            <div class="form-group">
+              <label for="fbNama">Nama <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="fbNama" name="nama" required>
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="fbEmail">Email <small class="text-muted">(opsional)</small></label>
+              <input type="email" class="form-control" id="fbEmail" name="email">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="fbRating">Penilaian <small class="text-muted">(opsional)</small></label>
+              <select class="form-control" id="fbRating" name="rating">
+                <option value="">- Pilih -</option>
+                <option value="5">5 - Sangat baik</option>
+                <option value="4">4 - Baik</option>
+                <option value="3">3 - Cukup</option>
+                <option value="2">2 - Kurang</option>
+                <option value="1">1 - Buruk</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-0">
+              <label for="fbPesan">Pesan <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="fbPesan" name="pesan" rows="4" required></textarea>
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+
+          <div class="modal-footer" style="border-top:1px solid var(--mint-100);">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn" id="btnKirimFeedback" style="background:var(--teal-500); color:#fff; font-weight:600;">
+              <i class="fas fa-paper-plane mr-1"></i> Kirim
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- REQUIRED SCRIPTS -->
   <script src="<?= base_url('AdminLTE') ?>/plugins/jquery/jquery.min.js"></script>
   <script src="<?= base_url('AdminLTE') ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -443,6 +502,61 @@
 
           var isSemua = (el.dataset.kecamatan === 'all') || (el.dataset.jenis === 'ALL');
           parentDropdown.classList.toggle('filter-active', !isSemua);
+        });
+      });
+    });
+
+    // ===== FEEDBACK =====
+    $(function () {
+      $('#btnBukaFeedback').on('click', function () {
+        $('.dropdown-menu').hide();
+      });
+
+      function updateCsrf(token) {
+        if (token) $('#formFeedback input[name="<?= csrf_token() ?>"]').val(token);
+      }
+
+      $('#formFeedback').on('submit', function (e) {
+        e.preventDefault();
+
+        var $form = $(this);
+        var $btn  = $('#btnKirimFeedback');
+
+        $form.find('.form-control').removeClass('is-invalid');
+        $('#feedbackAlert').empty();
+        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i> Mengirim...');
+
+        $.ajax({
+          url: '<?= base_url('feedback/simpan') ?>',
+          type: 'POST',
+          data: $form.serialize(),
+          dataType: 'json',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .done(function (res) {
+          $('#feedbackAlert').html('<div class="alert alert-success">' + res.message + '</div>');
+          $form[0].reset();
+          updateCsrf(res.token);
+          setTimeout(function () {
+            $('#modalFeedback').modal('hide');
+            $('#feedbackAlert').empty();
+          }, 1500);
+        })
+        .fail(function (xhr) {
+          var res = xhr.responseJSON || {};
+          if (res.errors) {
+            $.each(res.errors, function (field, msg) {
+              var $input = $form.find('[name="' + field + '"]');
+              $input.addClass('is-invalid');
+              $input.siblings('.invalid-feedback').text(msg);
+            });
+          } else {
+            $('#feedbackAlert').html('<div class="alert alert-danger">Gagal mengirim feedback. Coba lagi.</div>');
+          }
+          if (res.token) updateCsrf(res.token);
+        })
+        .always(function () {
+          $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-1"></i> Kirim');
         });
       });
     });
