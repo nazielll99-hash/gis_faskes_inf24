@@ -33,6 +33,7 @@ public array $aliases = [
     
     // TAMBAHKAN BARIS INI (Sesuaikan dengan nama nama class Filter Auth Anda)
     'auth'          => \App\Filters\AuthFilter::class, 
+    'apiAuth'       => \App\Filters\ApiAuthFilter::class,
     'forcehttps'    => \CodeIgniter\Filters\ForceHTTPS::class,
     'pagecache'     => \CodeIgniter\Filters\PageCache::class,
     'performance'   => \CodeIgniter\Filters\PerformanceMetrics::class,

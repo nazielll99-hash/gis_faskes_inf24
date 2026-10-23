@@ -67,3 +67,54 @@ $routes->group('dashboard', ['filter' => 'auth'], function () use ($routes) {
     $routes->get('apoteker',    'DashboardController::apoteker',    ['filter' => 'auth:apoteker']);
     $routes->get('resepsionis', 'DashboardController::resepsionis', ['filter' => 'auth:resepsionis']);
 });
+
+// ═══════════════════════════════════════════════════════════════════════════════
+//  REST API ENDPOINTS
+//  Semua endpoint mengembalikan JSON. Prefix: /api/
+// ═══════════════════════════════════════════════════════════════════════════════
+
+$routes->group('api', function () use ($routes) {
+
+    // ── Index (daftar endpoint) ──────────────────────────────────────────────
+    $routes->get('/', 'Api::index');
+
+    // ── Faskes (GET: publik) ──────────────────────────────────────────────────
+    $routes->get('faskes',          'Api::faskes');         // Semua faskes + filter
+    $routes->get('faskes/map',      'Api::faskesMap');      // Data GeoJSON untuk peta
+    $routes->get('faskes/(:num)',   'Api::faskesDetail/$1');// Detail 1 faskes
+
+    // ── Wilayah ──────────────────────────────────────────────────────────────
+    $routes->get('wilayah',         'Api::wilayah');
+    $routes->get('wilayah/(:num)',  'Api::wilayahDetail/$1');
+
+    // ── Kategori ─────────────────────────────────────────────────────────────
+    $routes->get('kategori',        'Api::kategori');
+
+    // ── Wilayah Administratif ────────────────────────────────────────────────
+    $routes->get('provinsi',            'Api::provinsi');
+    $routes->get('kabupaten/(:num)',    'Api::kabupaten/$1');
+    $routes->get('kecamatan/(:num)',    'Api::kecamatan/$1');
+
+    // ── Feedback (publik: bisa kirim) ────────────────────────────────────────
+    $routes->get('feedback',        'Api::feedback');
+    $routes->post('feedback',       'Api::feedbackCreate');
+
+    // ── Statistik ────────────────────────────────────────────────────────────
+    $routes->get('statistik',       'Api::statistik');
+
+    // ── Setting ──────────────────────────────────────────────────────────────
+    $routes->get('setting',         'Api::setting');
+});
+
+// ── Mutasi API (dilindungi autentikasi admin dan merespons JSON) ─────────────
+$routes->group('api', ['filter' => 'apiAuth'], function () use ($routes) {
+    $routes->post('faskes',             'Api::faskesCreate');
+    $routes->put('faskes/(:num)',       'Api::faskesUpdate/$1');
+    $routes->patch('faskes/(:num)',     'Api::faskesUpdate/$1');
+    $routes->delete('faskes/(:num)',    'Api::faskesDelete/$1');
+
+    $routes->post('wilayah',            'Api::wilayahCreate');
+    $routes->put('wilayah/(:num)',      'Api::wilayahUpdate/$1');
+    $routes->patch('wilayah/(:num)',    'Api::wilayahUpdate/$1');
+    $routes->delete('wilayah/(:num)',   'Api::wilayahDelete/$1');
+});
