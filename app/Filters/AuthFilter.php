@@ -6,26 +6,39 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class ApiAuthFilter implements FilterInterface
+class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        $isApi = $request->getUri()->getSegment(1) === 'api';
+
         if (! session()->get('is_logged')) {
-            return service('response')
-                ->setStatusCode(401)
-                ->setJSON([
-                    'status'  => false,
-                    'message' => 'Autentikasi diperlukan.',
-                ]);
+            if ($isApi) {
+                return service('response')
+                    ->setStatusCode(401)
+                    ->setJSON([
+                        'status'  => false,
+                        'message' => 'Autentikasi diperlukan.',
+                    ]);
+            }
+
+            return redirect()->to('/login');
         }
 
-        if (! in_array(session()->get('role'), [1, '1', 'admin'], true)) {
+        $role = session()->get('role');
+        $role = in_array($role, [1, '1', 'admin'], true) ? 'admin' : (string) $role;
+
+        if ($isApi && $role !== 'admin') {
             return service('response')
                 ->setStatusCode(403)
                 ->setJSON([
                     'status'  => false,
                     'message' => 'Akses hanya tersedia untuk admin.',
                 ]);
+        }
+
+        if (! $isApi && ! empty($arguments) && ! in_array($role, $arguments, true)) {
+            return redirect()->to('/')->with('error', 'Anda tidak punya akses ke halaman ini.');
         }
     }
 
