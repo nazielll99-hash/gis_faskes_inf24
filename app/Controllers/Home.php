@@ -25,7 +25,7 @@ class Home extends BaseController
             $faskesData = $this->ModelFaskes->db->table('tbl_faskes')
                 ->select('
                     tbl_faskes.*,
-                    COALESCE(tbl_kecamatan.nama_kecamatan, "") AS nama_kecamatan
+                    tbl_kecamatan.nama_kecamatan AS nama_kecamatan
                 ')
                 ->join('tbl_kecamatan', 'tbl_kecamatan.id_kecamatan = tbl_faskes.id_kecamatan', 'left')
                 ->where('tbl_faskes.id_kecamatan', $id_wilayah)

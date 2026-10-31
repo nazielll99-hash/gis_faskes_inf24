@@ -22,8 +22,7 @@ class ModelFaskes extends Model
         return $this->db->table('tbl_faskes')
             ->select('
                 tbl_faskes.*,
-                COALESCE(tbl_kecamatan.nama_kecamatan, "") AS nama_kecamatan,
-                COALESCE(tbl_faskes.id_kecamatan, "") AS id_kecamatan
+                tbl_kecamatan.nama_kecamatan AS nama_kecamatan
             ')
             ->join('tbl_kecamatan', 'tbl_kecamatan.id_kecamatan = tbl_faskes.id_kecamatan', 'left')
             ->get()->getResultArray();
