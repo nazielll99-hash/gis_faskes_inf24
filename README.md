@@ -1,61 +1,89 @@
-# CodeIgniter 4 Framework
+# GIS Fasilitas Kesehatan
 
-## What is CodeIgniter?
+Aplikasi web GIS untuk melihat dan mengelola informasi fasilitas kesehatan (faskes) berdasarkan lokasi administratif. Pengunjung dapat melihat persebaran faskes pada peta, sedangkan pengelola dapat memperbarui data melalui panel admin.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Fitur
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- Menampilkan peta wilayah dan lokasi fasilitas kesehatan.
+- Menampilkan informasi faskes, seperti nama, jenis, status, akreditasi, alamat, foto, dan koordinat.
+- Mengelola data faskes, wilayah, kategori, pengaturan situs, dan akun melalui panel admin.
+- Pendaftaran akun dengan persetujuan admin, serta fitur lupa dan reset kata sandi.
+- Menyediakan API JSON untuk data faskes, peta, wilayah, kategori, statistik, dan feedback.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Teknologi
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- PHP 8.2 atau lebih baru
+- CodeIgniter 4
+- PostgreSQL sebagai database utama
+- Composer untuk mengelola dependensi PHP
 
-## Important Change with index.php
+## Menjalankan aplikasi
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+1. Pastikan PHP, Composer, dan PostgreSQL telah terpasang. Aktifkan ekstensi PHP `intl`, `mbstring`, dan `pgsql`.
+2. Pasang dependensi dari direktori proyek:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+   ```text
+   composer install
+   ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+3. Buat database PostgreSQL. Nama database harus sama dengan nilai `database.default.database` di file `.env`. Secara default proyek menggunakan `gisfaskespg`:
 
-## Repository Management
+   ```text
+   psql -U postgres -d postgres -c "CREATE DATABASE gisfaskespg;"
+   ```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+4. Sesuaikan koneksi PostgreSQL pada `.env` lokal:
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+   ```ini
+   database.default.hostname = 127.0.0.1
+   database.default.username = postgres
+   database.default.password = password_postgresql_anda
+   database.default.database = gisfaskespg
+   database.default.DBDriver = Postgre
+   database.default.port = 5432
+   ```
 
-## Contributing
+5. Buat tabel dan jalankan migration:
 
-We welcome contributions from the community.
+   ```text
+   psql -U postgres -d gisfaskespg -f db-gis-faskes-postgresql.sql
+   php spark migrate
+   ```
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+6. Jalankan server pengembangan:
 
-## Server Requirements
+   ```text
+   php spark serve
+   ```
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+   Buka alamat yang ditampilkan oleh perintah tersebut. Untuk Laragon atau web server lain, arahkan document root ke folder `public`.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Impor data MySQL lama (opsional)
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+MySQL hanya diperlukan jika ingin menyalin data lama ke PostgreSQL. Atur koneksi `database.migrationSource.*` di `.env`, pastikan database PostgreSQL tujuan sudah memiliki struktur tabel dan masih kosong, lalu jalankan:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+```text
+php spark db:import-mysql
+```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+Perintah ini hanya untuk impor; aplikasi menggunakan koneksi `database.default` untuk operasi normal.
+
+## API
+
+Endpoint baca mengembalikan JSON dan tersedia dengan prefix `/api`, misalnya:
+
+- `GET /api/faskes` — daftar faskes; dapat difilter dengan `jenis`, `status`, `id_provinsi`, `id_kabupaten`, `id_kecamatan`, atau pencarian `q`.
+- `GET /api/faskes/map` — lokasi faskes dalam format GeoJSON.
+- `GET /api/faskes/{id}` — detail satu faskes.
+- `GET /api/wilayah` dan `GET /api/wilayah/{id}` — data wilayah.
+- `GET /api/kategori` — daftar kategori.
+- `GET /api/statistik` — statistik aplikasi.
+
+Endpoint untuk membuat, memperbarui, atau menghapus data memerlukan autentikasi API.
+
+## Keamanan dan kerja kelompok
+
+- Jangan commit atau membagikan `.env` yang berisi password database, kredensial SMTP, atau rahasia lainnya.
+- Bagikan file skema dan migration melalui Git agar setiap anggota dapat membuat database lokal dengan struktur yang sama.
+- Jangan memasukkan kredensial nyata atau data pribadi ke dalam dump database yang dibagikan.
+- Jika menggunakan database bersama, batasi akses pengguna dan siapkan backup berkala.
